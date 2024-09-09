@@ -1,0 +1,60 @@
+<!-- login.component.html -->
+<div class="login-container">
+    <div class="login-form-wrapper">
+      <h2 class="login-title">Welcome Back</h2>
+      
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+        
+        <!-- Email Field -->
+        <div class="form-group">
+          <input 
+            type="email" 
+            id="email" 
+            formControlName="email" 
+            required 
+            class="form-input" 
+            autocomplete="off" 
+            placeholder=" " />
+          <label for="email" class="form-label">Email</label>
+          <div *ngIf="isControlInvalid('email')" class="error-message">
+            Please enter a valid email.
+          </div>
+        </div>
+        
+        <!-- Password Field -->
+        <div class="form-group password-group">
+          <input 
+            [type]="showPassword ? 'text' : 'password'"
+            id="password" 
+            formControlName="password" 
+            required 
+            class="form-input" 
+            autocomplete="off" 
+            placeholder=" " />
+          <label for="password" class="form-label">Password</label>
+          <span class="toggle-password" (click)="togglePasswordVisibility()">
+            <i [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+          </span>
+          <div *ngIf="isControlInvalid('password')" class="error-message">
+            Password is required.
+          </div>
+        </div>
+        
+        <!-- Submit Button -->
+        <button type="submit" [disabled]="loginForm.invalid" class="login-button">
+          Log In
+        </button>
+        
+        <!-- Link to Signup -->
+        <div class="login-footer">
+          <p>Don't have an account? <a routerLink="/signup">Sign up here</a></p>
+        </div>
+      </form>
+    </div>
+    
+    <!-- Optional Background Animations -->
+    <div class="login-background">
+      <!-- Add any background elements or animations here -->
+    </div>
+  </div>
+  

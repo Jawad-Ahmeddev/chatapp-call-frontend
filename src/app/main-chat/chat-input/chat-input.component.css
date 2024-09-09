@@ -1,0 +1,95 @@
+/* Overall container for the chat input */
+.chat-input-container {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #f4f6f8;
+  border-top: 1px solid #e0e0e0;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.05);
+  gap: 10px; /* Add spacing between the elements */
+}
+
+/* Modern Button Styling */
+.modern-button {
+  background-color: #fff;
+  border: none;
+  color: #555;
+  font-size: 22px; /* Slightly increase icon size */
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 50%;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ddd;  /* Border for better visibility */
+}
+
+.modern-button i {
+  font-size: 18px;
+  color: #007bff;  /* Blue icon color for visibility */
+}
+
+.modern-button:hover {
+  background-color: #e0e0e0;  /* Lighter gray on hover */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);  /* Shadow effect */
+  border-color: #007bff;  /* Blue border on hover */
+}
+
+/* Align actions vertically */
+.chat-input__actions {
+  display: flex;
+  gap: 8px; /* Space between action buttons */
+}
+
+/* Input field wrapper */
+.chat-input__field-wrapper {
+  flex: 1;
+}
+
+/* Input field styling */
+.chat-input__field {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 25px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background-color: #fff;
+  color: #333;
+}
+
+.chat-input__field:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);  /* Blue focus shadow */
+}
+
+/* Send button */
+.chat-input__send-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  font-size: 18px;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.chat-input__send-button:hover {
+  background-color: #0056b3;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);  /* Hover shadow */
+}
+
+/* Emoji picker */
+.emoji-picker {
+  position: absolute;
+  bottom: 60px;
+  right: 20px;
+  background-color: white;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  z-index: 1000;
+  overflow: hidden;
+}

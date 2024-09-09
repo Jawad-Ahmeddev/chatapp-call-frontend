@@ -1,0 +1,44 @@
+<div class="profile-container">
+  <div class="profile-header">
+    <h2 class="profile-title">My Profile</h2>
+  </div>
+
+  <div class="profile-content">
+    <!-- Profile Picture Section -->
+    <div class="profile-picture-section">
+      <img [src]="userProfile?.profilePicture || 'assets/default-avatar.png'" 
+      alt="Profile Picture" class="profile-picture">
+ 
+      <input type="file" id="profilePictureInput" (change)="onProfilePictureSelected($event)" hidden>
+      <button class="upload-button" (click)="triggerProfilePictureInput()">Change Picture</button>
+    </div>
+
+    <!-- Profile Info Section -->
+    <div class="profile-info-section">
+      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+        <!-- Username Field -->
+        <div class="form-group">
+          <label for="username" class="form-label">Username</label>
+          <input type="text" id="username" formControlName="username" class="form-input">
+          <div *ngIf="isControlInvalid('username')" class="error-message">
+            Username is required.
+          </div>
+        </div>
+
+        <!-- Email Field -->
+        <div class="form-group">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" id="email" formControlName="email" class="form-input">
+          <div *ngIf="isControlInvalid('email')" class="error-message">
+            Please enter a valid email.
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" [disabled]="profileForm.invalid" class="save-button">
+          Save Changes
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,134 @@
+/* General chat window container */
+.chat-window {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #f9f9f9; /* Lighter background */
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Chat Header */
+.chat-window__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #007bff;
+  padding: 20px;
+  color: white;
+  border-bottom: 2px solid #0069d9;
+}
+
+.chat-header__info {
+  display: flex;
+  align-items: center;
+}
+
+.chat-header__avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.chat-header__details h2 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.chat-header__details p {
+  margin: 0;
+  font-size: 13px;
+  color: #dcdcdc;
+}
+
+/* Messages Area */
+.chat-window__messages {
+  flex-grow: 1;
+  padding: 15px;
+  overflow-y: auto;
+  background-color: #f9f9f9;
+  scrollbar-width: thin;
+}
+
+/* General message container */
+.chat-message {
+  display: flex;
+  margin-bottom: 15px;
+  width: 100%; /* Ensure messages take up the full width of the container */
+}
+
+/* Wrapper for left-aligned messages (incoming) */
+.message__wrapper--left {
+  justify-content: flex-start;
+  text-align: left;
+  flex-direction: row; /* Keep the avatar on the left */
+  align-items: flex-start; /* Ensures messages and avatars align properly */
+  width: 100%;
+}
+
+.message__wrapper--left .message__avatar {
+  margin-right: 10px;
+}
+
+/* Wrapper for right-aligned messages (outgoing) */
+.message__wrapper--right {
+  justify-content: flex-end;
+  text-align: right;
+  flex-direction: row-reverse; /* Move avatar to the right */
+  align-items: flex-end; /* Align the avatar and message */
+  width: 100%;
+}
+
+.message__wrapper--right .message__avatar {
+  margin-left: 10px;
+}
+
+/* Message content styling */
+.message__content {
+  padding: 12px 18px;
+  border-radius: 12px;
+  max-width: 70%; /* Limit the message width */
+  display: inline-block;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Adds a modern shadow */
+}
+
+/* Avatar styling */
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+/* Styling for incoming messages */
+.message--incoming .message__content {
+  background-color: #f1f0f0;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+/* Styling for outgoing messages */
+.message--outgoing .message__content {
+  background-color: #007bff;
+  color: white;
+  border: none;
+}
+
+/* Text and time styling */
+.message__text {
+  margin: 0;
+  font-size: 16px;
+}
+
+.message__time {
+  display: block;
+  margin-top: 5px;
+  font-size: 12px;
+  color: #999;
+}
+
+.message__sender-name {
+  font-weight: bold;
+  margin-bottom: 5px;
+}

@@ -1,0 +1,114 @@
+/* General Header Styling */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 30px;
+    background-color: #2c3e50;
+    color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Logo Section */
+  .header__logo {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo__image {
+    height: 40px;
+    margin-right: 10px;
+  }
+  
+  .logo__text {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  /* Profile Section */
+  .header__profile {
+    display: flex;
+    align-items: center;
+  }
+  
+  .profile__dropdown {
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .profile__avatar {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    border: 2px solid #1abc9c;
+  }
+  
+  .profile__name {
+    margin-right: 10px;
+    font-weight: bold;
+  }
+  
+  .profile__dropdown i {
+    font-size: 0.8rem;
+    transition: transform 0.3s ease;
+  }
+  
+  /* Dropdown Menu */
+  .dropdown__menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 10px;
+    background-color: #34495e;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+    z-index: 100;
+  }
+  
+  .profile__dropdown:hover .dropdown__menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  
+  .dropdown__item {
+    padding: 10px 20px;
+    color: white;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .dropdown__item i {
+    margin-right: 10px;
+    font-size: 1rem;
+  }
+  
+  .dropdown__item:hover {
+    background-color: #1abc9c;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .header__logo {
+      margin-bottom: 10px;
+    }
+  
+    .profile__name {
+      display: none;
+    }
+  }
+  

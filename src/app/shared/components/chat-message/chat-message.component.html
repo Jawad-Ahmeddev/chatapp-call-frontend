@@ -1,0 +1,35 @@
+<!-- chat-message.component.html -->
+<div [ngClass]="{'chat-message': true, 'message--incoming': incoming, 'message--outgoing': !incoming}">
+  
+    <!-- Avatar for Incoming Messages -->
+    <div *ngIf="incoming" class="message__avatar">
+      <img src="{{ senderAvatar || 'assets/default-avatar.png' }}" alt="{{ senderName }}'s avatar" class="avatar__image">
+    </div>
+    
+    <!-- Message Content -->
+    <div class="message__content">
+      
+      <!-- Sender Name and Timestamp -->
+      <div class="message__header">
+        <span class="message__sender">{{ senderName }}</span>
+        <span class="message__time">{{ timestamp | date:'shortTime' }}</span>
+      </div>
+      
+      <!-- Text Message -->
+      <div *ngIf="messageType === 'text'" class="message__text">
+        {{ messageText }}
+      </div>
+      
+      <!-- Image Message -->
+      <div *ngIf="messageType === 'image'" class="message__image">
+        <img [src]="messageContent" alt="Image" class="image__content">
+      </div>
+      
+      <!-- File Message -->
+      <div *ngIf="messageType === 'file'" class="message__file">
+        <a [href]="messageContent" target="_blank">{{ messageFileName }}</a>
+      </div>
+  
+    </div>
+  </div>
+  

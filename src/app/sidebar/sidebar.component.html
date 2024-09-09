@@ -1,0 +1,60 @@
+<div class="sidebar">
+  <div class="sidebar__header">
+    <div class="sidebar__logo">
+      <img src="assets/logo.png" alt="App Logo" class="logo__image">
+      <h1 class="logo__text">ChatApp</h1>
+    </div>
+  </div>
+
+  <div class="sidebar__search">
+    <input type="text" class="search__input" placeholder="Search chats..." />
+  </div>
+
+  <div class="sidebar__menu">
+    <ul class="menu__list">
+      <li class="menu__item" (click)="showAllPrivateChats = false; navigateToGroupChats()">
+        <i class="fas fa-users"></i> Group Chats
+      </li>
+      <li class="menu__item" (click)="togglePrivateChats()">
+        <i class="fas fa-user-friends"></i> Personal Chats
+      </li>
+    </ul>
+  </div>
+
+  <div class="sidebar__chats">
+    <h3 class="chats__title">{{ showAllPrivateChats ? 'All Private Chats' : 'Recent Chats' }}</h3>
+    <ul class="chats__list">
+      <li class="chats__item" *ngFor="let chat of showAllPrivateChats ? allPrivateChats : recentChats" 
+      (click)="openChat(chat.room || chat._id, chat.type)">
+          <div class="chat__avatar">
+          <img [src]="getProfileImage(chat.participants)" alt="{{ chat.name }}'s avatar" class="avatar__image">
+        </div>
+        <div class="chat__info">
+          <span class="chat__name">{{ getParticipantName(chat.participants) }}</span>
+          <span class="chat__last-message">{{ chat.lastMessage?.message }}</span>
+        </div>
+      </li>
+    </ul>
+    
+  </div>
+
+  <button class="new-chat-button" (click)="showModal = true">+ New Chat</button>
+
+  <div class="sidebar__footer">
+    <button class="footer__button" (click)="goToSettings()">
+      <i class="fas fa-cog"></i> Settings
+    </button>
+    <button class="footer__button" (click)="logout()">
+      <i class="fas fa-sign-out-alt"></i> Logout
+    </button>
+  </div>
+
+  <div class="modal" *ngIf="showModal">
+    <div class="modal__content">
+      <span class="close" (click)="showModal = false">&times;</span>
+      <h2>Start a New Chat</h2>
+      <input [(ngModel)]="newChatEmail" placeholder="Enter email to chat" class="modal__input">
+      <button (click)="createOrJoinPersonalChat()" class="modal__button">Start Chat</button>
+    </div>
+  </div>
+</div>

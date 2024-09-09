@@ -1,0 +1,102 @@
+<!-- signup.component.html -->
+<div class="signup-container">
+    <div class="signup-form-wrapper">
+      <h2 class="signup-title">Create an Account</h2>
+      
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="signup-form">
+        
+        <!-- Username Field -->
+        <div class="form-group">
+          <input 
+            type="text" 
+            id="username" 
+            formControlName="username" 
+            required 
+            class="form-input" 
+            autocomplete="off" 
+            placeholder=" " />
+          <label for="username" class="form-label">Username</label>
+          <div *ngIf="isControlInvalid('username')" class="error-message">
+            Username is required.
+          </div>
+        </div>
+        
+        <!-- Email Field -->
+        <div class="form-group">
+          <input 
+            type="email" 
+            id="email" 
+            formControlName="email" 
+            required 
+            class="form-input" 
+            autocomplete="off" 
+            placeholder=" " />
+          <label for="email" class="form-label">Email</label>
+          <div *ngIf="isControlInvalid('email')" class="error-message">
+            Please enter a valid email.
+          </div>
+        </div>
+        
+        <!-- Password Field -->
+        <div class="form-group password-group">
+          <input 
+            [type]="showPassword ? 'text' : 'password'"
+            id="password" 
+            formControlName="password" 
+            required 
+            class="form-input" 
+            autocomplete="off" 
+            placeholder=" " />
+          <label for="password" class="form-label">Password</label>
+          <span class="toggle-password" (click)="togglePasswordVisibility()">
+            <i [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+          </span>
+          <div *ngIf="isControlInvalid('password')" class="error-message">
+            Password is required.
+          </div>
+          <!-- Password Strength Indicator -->
+          <div class="password-strength">
+            <div [ngClass]="passwordStrengthClass"></div>
+          </div>
+        </div>
+        
+        <!-- Confirm Password Field -->
+        <div class="form-group password-group">
+          <input 
+            [type]="showConfirmPassword ? 'text' : 'password'"
+            id="confirmPassword" 
+            formControlName="confirmPassword" 
+            required 
+            class="form-input" 
+            autocomplete="off" 
+            placeholder=" " />
+          <label for="confirmPassword" class="form-label">Confirm Password</label>
+          <span class="toggle-password" (click)="toggleConfirmPasswordVisibility()">
+            <i [class]="showConfirmPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+          </span>
+          <div *ngIf="isControlInvalid('confirmPassword')" class="error-message">
+            Please confirm your password.
+          </div>
+          <div *ngIf="signupForm.hasError('passwordMismatch') && signupForm.get('confirmPassword')?.touched" class="error-message">
+            Passwords do not match.
+          </div>
+        </div>
+        
+        <!-- Submit Button -->
+        <button type="submit" [disabled]="signupForm.invalid" class="signup-button">
+          Sign Up
+        </button>
+        
+        <!-- Link to Login -->
+        <div class="signup-footer">
+          <p>Already have an account? <a routerLink="/login">Login here</a></p>
+        </div>
+      </form>
+    </div>
+    
+    <!-- Optional Background Animations -->
+    <div class="signup-background">
+      <!-- Add any background elements or animations here -->
+    </div>
+  </div>
+  

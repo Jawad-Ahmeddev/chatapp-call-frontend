@@ -1,0 +1,200 @@
+/* General Container Styling */
+.login-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .login-form-wrapper {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    z-index: 2;
+  }
+  
+  .login-title {
+    font-size: 1.8rem;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Form Group Styling */
+  .form-group {
+    position: relative;
+    margin-bottom: 30px;
+  }
+  
+  .form-input {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 1rem;
+    border: 1px solid #bdc3c7;
+    border-radius: 5px;
+    background: transparent;
+    color: #2c3e50;
+    outline: none;
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .form-input:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+  }
+  
+  .form-label {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    background-color: white;
+    padding: 0 5px;
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    pointer-events: none;
+    transition: top 0.3s ease, font-size 0.3s ease, color 0.3s ease;
+  }
+  
+  .form-input:focus ~ .form-label,
+  .form-input:not(:placeholder-shown) ~ .form-label {
+    top: 0;
+    font-size: 0.75rem;
+    color: #3498db;
+  }
+  
+  /* Toggle Password Visibility */
+  .password-group {
+    position: relative;
+  }
+  
+  .toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #7f8c8d;
+    font-size: 1.2rem;
+  }
+  
+  .toggle-password:hover {
+    color: #3498db;
+  }
+  
+  /* Error Messages */
+  .error-message {
+    color: #e74c3c;
+    font-size: 0.85rem;
+    margin-top: 5px;
+    animation: fadeIn 0.3s ease;
+  }
+  
+  /* Submit Button */
+  .login-button {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 1.1rem;
+    color: white;
+    background-color: #3498db;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .login-button:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+  }
+  
+  .login-button:hover:not(:disabled) {
+    background-color: #2980b9;
+  }
+  
+  .login-button:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+  
+  /* Footer Link */
+  .login-footer {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .login-footer p {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+  }
+  
+  .login-footer a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+  }
+  
+  .login-footer a:hover {
+    color: #2980b9;
+  }
+  
+  /* Background Animations */
+  .login-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    opacity: 0.8;
+    filter: blur(10px);
+    animation: moveBackground 10s infinite linear;
+  }
+  
+  /* Background Animation Keyframes */
+  @keyframes moveBackground {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: 100% 100%;
+    }
+  }
+  
+  /* Input Error Animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .login-form-wrapper {
+      padding: 30px;
+      max-width: 100%;
+    }
+  
+    .login-title {
+      font-size: 1.5rem;
+    }
+  
+    .form-input {
+      font-size: 0.9rem;
+    }
+  
+    .login-button {
+      font-size: 1rem;
+    }
+  }
+  

@@ -1,0 +1,42 @@
+<div class="chat-input-container">
+  <!-- File Upload Button and Emoji Button -->
+  <div class="chat-input__actions">
+    <!-- Emoji Picker Button -->
+    <button (click)="toggleEmojiPicker()" class="chat-input__emoji-button modern-button">
+      <i class="fas fa-smile"></i> <!-- Emoji Icon -->
+    </button>
+
+    <!-- File Upload Button -->
+    <input type="file" #fileInput (change)="handleFileInput($event)" hidden>
+    <button (click)="triggerFileInput()" class="chat-input__file-button modern-button">
+      <i class="fas fa-paperclip"></i> <!-- File Upload Icon -->
+    </button>
+  </div>
+
+  <!-- Chat Input Field -->
+  <div class="chat-input__field-wrapper">
+    <input
+      type="text"
+      [(ngModel)]="messageText"
+      (keyup.enter)="sendMessage()"
+      placeholder="Type your message..."
+      class="chat-input__field"
+    />
+  </div>
+
+  <!-- Send Button -->
+  <button (click)="sendMessage()" class="chat-input__send-button modern-button">
+    <i class="fas fa-paper-plane"></i> <!-- Send Icon -->
+  </button>
+
+  <!-- Emoji Picker -->
+  <div *ngIf="showEmojiPicker" class="emoji-picker">
+    <emoji-mart 
+      title="Pick your emoji…" 
+      emoji="point_up" 
+      set="apple" 
+      (emojiClick)="addEmoji($event)" 
+      [style]="{ position: 'absolute', bottom: '60px', right: '20px' }"
+    ></emoji-mart>
+  </div>
+</div>

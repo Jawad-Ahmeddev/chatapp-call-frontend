@@ -1,0 +1,10 @@
+<div class="main-chat">
+    <app-sidebar (chatSelected)="onChatSelected($event)"></app-sidebar>
+  
+    <div class="chat-area">
+      <app-chat-window [chatId]="selectedChatId" [chatType]="selectedChatType"></app-chat-window>
+      <app-chat-input *ngIf="selectedChatId" [chatId]="selectedChatId"></app-chat-input>
+
+    </div>
+  </div>
+  

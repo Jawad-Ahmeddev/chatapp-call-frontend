@@ -1,0 +1,24 @@
+<!-- settings.component.html -->
+<div class="settings-container">
+    <h2 class="settings-title">Settings</h2>
+  
+    <div class="settings-section">
+      <h3 class="section-title">Theme</h3>
+      <div class="theme-options">
+        <label>
+          <input type="radio" name="theme" value="light" (change)="changeTheme('light')" [checked]="currentTheme === 'light'">
+          Light Mode
+        </label>
+        <label>
+          <input type="radio" name="theme" value="dark" (change)="changeTheme('dark')" [checked]="currentTheme === 'dark'">
+          Dark Mode
+        </label>
+      </div>
+    </div>
+  
+    <div class="settings-section">
+      <h3 class="section-title">Account</h3>
+      <button class="logout-button" (click)="logout()">Logout</button>
+    </div>
+  </div>
+  

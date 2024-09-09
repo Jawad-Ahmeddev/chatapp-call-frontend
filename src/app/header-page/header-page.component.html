@@ -1,0 +1,24 @@
+<header class="header">
+  <!-- App Logo/Name -->
+  <div class="header__logo">
+    <img src="../../assets/logoForChatApp.jpg" alt="App Logo" class="logo__image">
+    <h1 class="logo__text">ChatApp</h1>
+  </div>
+
+  <!-- User Profile and Actions -->
+  <div class="header__profile">
+    <div class="profile__dropdown">
+      <!-- Bind the user's profile picture and name -->
+      <img [src]="userProfile?.profilePicture || 'assets/default-avatar.png'" alt="User Avatar" class="profile__avatar">
+      <span class="profile__name">{{ userProfile?.username }}</span>
+      <i class="fas fa-chevron-down"></i> <!-- Font Awesome icon for dropdown -->
+
+      <!-- Dropdown Menu -->
+      <ul class="dropdown__menu">
+        <li class="dropdown__item" (click)="goToProfile()"><i class="fas fa-user"></i> Profile</li>
+        <li class="dropdown__item" (click)="goToSetting()"><i class="fas fa-cog"></i> Settings</li>
+        <li class="dropdown__item" (click)="logout()"><i class="fas fa-sign-out-alt"></i> Logout</li>
+      </ul>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,99 @@
+/* General Message Styling */
+.chat-message {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 15px;
+  }
+  
+  .message--incoming {
+    justify-content: flex-start;
+  }
+  
+  .message--outgoing {
+    justify-content: flex-end;
+    text-align: right;
+  }
+  
+  /* Avatar Styling */
+  .message__avatar {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+  
+  .avatar__image {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+  
+  /* Message Content Styling */
+  .message__content {
+    max-width: 70%;
+    padding: 10px 15px;
+    border-radius: 20px;
+    position: relative;
+    background-color: #ecf0f1; /* Light background color */
+    color: #2c3e50; /* Text color */
+  }
+  
+  .message--outgoing .message__content {
+    background-color: #3498db; /* Primary color for outgoing messages */
+    color: #ffffff; /* White text for outgoing messages */
+    border-radius: 20px 20px 0 20px;
+  }
+  
+  .message--incoming .message__content {
+    background-color: #ffffff; /* White background for incoming messages */
+    color: #2c3e50; /* Dark text color for incoming messages */
+    border-radius: 20px 20px 20px 0;
+  }
+  
+  /* Message Header Styling (Sender Name and Timestamp) */
+  .message__header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+  }
+  
+  .message__sender {
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+  
+  .message__time {
+    font-size: 0.8rem;
+    color: #95a5a6; /* Light gray for timestamp */
+  }
+  
+  /* Text Message Styling */
+  .message__text {
+    font-size: 1rem;
+    word-wrap: break-word;
+  }
+  
+  /* Image Message Styling */
+  .message__image {
+    margin-top: 10px;
+  }
+  
+  .image__content {
+    max-width: 100%;
+    border-radius: 10px;
+  }
+  
+  /* File Message Styling */
+  .message__file {
+    margin-top: 10px;
+  }
+  
+  .message__file a {
+    color: #3498db; /* Link color */
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .message__file a:hover {
+    text-decoration: underline;
+  }
+  
