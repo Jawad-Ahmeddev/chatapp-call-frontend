@@ -3,13 +3,13 @@
   <!-- Chat Header -->
   <div class="chat-window__header">
     <div class="chat-header__info">
-      <img src="assets/default-avatar.png" alt="Chat Avatar" class="chat-header__avatar">
+      <img [src]="chatAvatar" alt="Chat Avatar" class="chat-header__avatar">
       <div class="chat-header__details">
         <h2 class="chat-header__name">{{ chatName }}</h2>
         <p class="chat-header__status">{{ chatStatus }}</p>
       </div>
     </div>
-    <div class="chat-header__actions">
+    <!-- <div class="chat-header__actions">
       <button class="header-action__button" (click)="toggleOptions()">
         <i class="fas fa-ellipsis-v"></i>
       </button>
@@ -17,7 +17,7 @@
         <button class="dropdown__item" (click)="goToSettings()">Settings</button>
         <button class="dropdown__item" (click)="exitChat()">Exit Chat</button>
       </div>
-    </div>
+    </div> -->
   </div>
   
   <!-- Messages Area -->
@@ -26,19 +26,19 @@
          [ngClass]="{'message--incoming': message.sender._id !== currentUserId, 'message--outgoing': message.sender._id === currentUserId}" 
          class="chat-message">
       
-      <!-- Incoming (other user's) messages -->
+      <!-- Incoming messages -->
       <div *ngIf="message.sender._id !== currentUserId" class="message__wrapper message__wrapper--left">
         <div class="message__avatar">
-          <img [src]="message.senderAvatar || 'assets/default-avatar.png'" alt="Sender Avatar" class="avatar">
+          <img [src]="message.sender?.profilePicture || 'assets/default-avatar.png'" alt="Sender Avatar" class="avatar">
         </div>
         <div class="message__content">
-          <p class="message__sender-name">{{ message.senderName }}</p>
+          <p class="message__sender-name">{{ message.sender?.username || 'Unknown' }}</p>
           <p class="message__text">{{ message.message }}</p>
           <span class="message__time">{{ message.createdAt | date:'shortTime' }}</span>
         </div>
       </div>
 
-      <!-- Outgoing (current user's) messages -->
+      <!-- Outgoing messages -->
       <div *ngIf="message.sender._id === currentUserId" class="message__wrapper message__wrapper--right">
         <div class="message__content">
           <p class="message__text">{{ message.message }}</p>

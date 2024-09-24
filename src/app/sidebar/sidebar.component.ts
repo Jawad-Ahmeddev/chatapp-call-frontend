@@ -4,6 +4,7 @@ import { ChatServiceService } from '../core/services/chat-service.service';
 import {  Output} from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { AuthService } from '../core/services/auth.service';
+import { SocketService } from '../core/services/socket.service';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -12,28 +13,111 @@ import { AuthService } from '../core/services/auth.service';
 export class SidebarComponent implements OnInit {
   personalChats: any[] = [];
   groupChat: any = null;
+  groupChatId = '64eaa9ed13649663736b0d05';  // Group chat ID
+  selectedChatId: string = '';
+
   recentChats: any[] = []; // Define recentChats here
   newChatEmail: string = ''; // Holds the email for the new chat
   showModal: boolean = false; // Controls modal visibility
   userId: any;
   public showAllPrivateChats = false; // Toggle flag
   public allPrivateChats: any[] = [];
+  groupChats: any;
+  showGroupChats: boolean = false;
+  showPersonalChats: boolean = false;
 
   @Output() chatSelected = new EventEmitter<{ chatId: string, chatType: string }>();
+  currentChatView: string = 'recent';  // 'recent' or 'group'
+  searchTerm: string = '';  // To store the search term entered by the user
+  allChats: any[] = [];     // This will store all chats fetched from the backend
+  filteredChats: any[] = []; // This will store the filtered chats for display
+  filteredPrivateChats: any[] = []; // This will store the filtered private chats for display
 
   constructor(
     private chatService: ChatServiceService,
     private router: Router,
-    private authService : AuthService
+    private authService : AuthService,
+    private socketService : SocketService
 
   ) {}
 
   ngOnInit(): void {
     this.userId = this.authService.getUserId() || '';
-    this.loadRecentChats();
-    this.loadAllPrivateChats();
+    // this.loadRecentChats();
+    // this.loadGroupChat(); // Load the group chat in the sidebar
+    this.fetchRecentChats(); // Fetch recent chats by default
+    this.fetchChats();
   }
 
+  fetchChats() {
+    // Fetch all chats (personal, group, or recent) and store them
+    this.chatService.getAllPrivateChats().subscribe((chats) => {
+      this.allPrivateChats = chats;
+      this.filteredPrivateChats = this.allPrivateChats;  // Initially show all private chats
+    });
+    this.chatService.getGroupChat().subscribe((chats) => {
+      this.groupChats = chats;
+    });
+  }
+
+  filterChats() {
+    if (this.searchTerm.trim() === '') {
+      // If there's no search term, reset to show all private chats
+      this.filteredPrivateChats = this.allPrivateChats;
+    } else {
+      const searchLower = this.searchTerm.toLowerCase();  // Convert search term to lowercase
+      this.filteredPrivateChats = this.allPrivateChats.filter(chat => {
+        const participantNames = chat.participants
+          .map((participant: any) => participant.username.toLowerCase());
+        return participantNames.some((name: any) => name.includes(searchLower));
+      });
+    }
+  }
+  togglePersonalChats(): void {
+    this.showPersonalChats = !this.showPersonalChats;
+    if (this.showPersonalChats) {
+      this.fetchPersonalChats();
+    } else {
+      this.fetchRecentChats(); // Show recent chats when toggling back
+    }
+  }
+
+  toggleGroupChats() {
+    this.showGroupChats = !this.showGroupChats;
+  
+    if (this.showGroupChats) {
+      this.chatService.getGroupChat().subscribe(
+        (groupChat) => {
+          this.groupChats = [groupChat]; // Only one group chat, so we wrap it in an array
+        },
+        (error) => {
+          console.error('Error fetching group chat:', error);
+        }
+      );
+    } else {
+      this.loadRecentChats(); // Go back to recent chats if group chats are toggled off
+    }
+    
+  }
+  
+
+  fetchRecentChats(): void {
+    this.chatService.getRecentChats().subscribe((chats) => {
+      this.recentChats = chats;
+    });
+  }
+
+  fetchPersonalChats(): void {
+    this.chatService.getPersonalChats().subscribe((chats) => {
+      this.personalChats = chats;
+    });
+  }
+
+  fetchGroupChats(): void {
+    this.chatService.getGroupChat().subscribe((chats) => {
+      this.groupChats = chats;
+    });
+  }
   loadPersonalChats(): void {
     this.chatService.getPersonalChats().subscribe(
       (chats) => {
@@ -47,27 +131,19 @@ export class SidebarComponent implements OnInit {
     );
   }
 
-  loadGroupChat(): void {
-    
-    this.chatService.getGroupChat().subscribe(
-      (chat) => {
-        this.groupChat = chat;
-        this.recentChats.push(chat); // Add group chat to recentChats
+  
 
-      },
-      (error) => {
-        console.error('Failed to load group chat:', error);
-      }
-    );
+  loadGroupChat() {
+    this.chatService.getGroupChat().subscribe((groupChat: any) => {
+      this.groupChat = groupChat;
+    });
   }
+  
 
-  openChat(room: string, type: string) {
-    if (room) {
-      console.log('Chat clicked:', room, type);
-      this.chatSelected.emit({ chatId: room, chatType: type });
-    } else {
-      console.error('Room ID is undefined for this chat. Please check if the data is being fetched correctly.');
-    }
+  openChat(chatId: string, chatType: string) {
+    this.chatSelected.emit({ chatId, chatType });
+    console.log('Chat selected:', chatId, chatType);
+
   }
   
   
@@ -87,22 +163,19 @@ export class SidebarComponent implements OnInit {
   }
 
   createOrJoinPersonalChat(): void {
-    if (this.newChatEmail.trim()) {
-      this.chatService.createOrJoinPersonalChatByEmail(this.newChatEmail).subscribe(
-        (response) => {
-          this.personalChats.push(response.room);
+    if (!this.newChatEmail) return; // Ensure the input is not empty
 
-          this.loadRecentChats(); // Reload recent chats after creating a new chat
-          this.newChatEmail = '';
-          this.showModal = false;
-          this.loadAllPrivateChats();
-
-        },
-        (error) => {
-          console.error('Failed to create or join chat:', error);
-        }
-      );
-    }
+    this.chatService.createOrJoinPersonalChatByEmail(this.newChatEmail).subscribe(
+      (chat) => {
+        // Add the new or existing chat to the chat list
+        this.recentChats.unshift(chat);
+        this.showModal = false; // Close the modal
+        this.newChatEmail = ''; // Clear the input
+      },
+      (error) => {
+        console.error('Error creating or joining chat:', error);
+      }
+    );
   }
 
   // Determine chat name based on participants
@@ -116,8 +189,7 @@ export class SidebarComponent implements OnInit {
     }
   }
 
-
-
+ 
   
   // Navigate to a specific chat
   navigateToPersonalChats() {
@@ -150,7 +222,7 @@ export class SidebarComponent implements OnInit {
   togglePrivateChats() {
     this.showAllPrivateChats = !this.showAllPrivateChats;
     if (this.showAllPrivateChats) {
-      this.loadPrivateChats();
+      this.loadAllPrivateChats();
     } else {
       this.loadRecentChats();
     }
@@ -178,14 +250,9 @@ export class SidebarComponent implements OnInit {
     }
 
     removeDuplicates(chats: any[]): any[] {
-      // Use a Set to filter out duplicate chat room IDs or unique identifiers
-      const uniqueChats = new Map();
-      chats.forEach(chat => {
-        if (!uniqueChats.has(chat.room)) {
-          uniqueChats.set(chat.room, chat);
-        }
-      });
-      return Array.from(uniqueChats.values());
+      return chats.filter((chat, index, self) =>
+        index === self.findIndex((c) => c._id === chat._id)
+      );
     }
   
   
@@ -196,8 +263,10 @@ export class SidebarComponent implements OnInit {
   }
 
 
-  selectChat(chatId: string, chatType: 'personal' | 'group'): void {
-    this.chatSelected.emit({ chatId: chatId, chatType: chatType });
+  selectChat(chatId: string, chatType: string) {
+    this.selectedChatId = chatId;
+    this.socketService.joinChat(chatId);
+    this.chatService.setSelectedChat(chatId, chatType);
   }
 
 

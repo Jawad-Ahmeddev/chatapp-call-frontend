@@ -57,4 +57,8 @@ export class HeaderPageComponent implements OnInit{
     this.authService.logout();
   }
 
+  logoClicked(){
+    this.router.navigate(['/chat'])
+  }
+
 }

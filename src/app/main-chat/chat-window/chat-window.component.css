@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background-color: #f9f9f9; /* Lighter background */
+  background-color: var(--chat-background);
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -14,10 +14,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #007bff;
+  background-color: var(--primary-color);
   padding: 20px;
-  color: white;
-  border-bottom: 2px solid #0069d9;
+  color: var(--text-color);
+  border-bottom: 2px solid var(--primary-color);
 }
 
 .chat-header__info {
@@ -35,12 +35,14 @@
 .chat-header__details h2 {
   font-size: 18px;
   margin: 0;
+  color: var(--text-color);
+
 }
 
 .chat-header__details p {
   margin: 0;
   font-size: 13px;
-  color: #dcdcdc;
+  color: var(--input-text-color);
 }
 
 /* Messages Area */
@@ -48,7 +50,7 @@
   flex-grow: 1;
   padding: 15px;
   overflow-y: auto;
-  background-color: #f9f9f9;
+  background-color: var(--background-color);
   scrollbar-width: thin;
 }
 
@@ -103,15 +105,15 @@
 
 /* Styling for incoming messages */
 .message--incoming .message__content {
-  background-color: #f1f0f0;
-  color: #333;
+  background-color: var(--input-background);
+  color: var(--primary-text-color);
   border: 1px solid #ddd;
 }
 
 /* Styling for outgoing messages */
 .message--outgoing .message__content {
-  background-color: #007bff;
-  color: white;
+  background-color: var(--primary-color);
+  color: var(--text-color);
   border: none;
 }
 
@@ -119,6 +121,7 @@
 .message__text {
   margin: 0;
   font-size: 16px;
+  
 }
 
 .message__time {

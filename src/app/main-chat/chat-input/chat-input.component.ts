@@ -1,6 +1,9 @@
 import { Component, EventEmitter, Output, ViewChild, ElementRef , Input, OnChanges} from '@angular/core';
 import { ChatServiceService } from '../../core/services/chat-service.service';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { SocketService } from 'src/app/core/services/socket.service';
+import { response } from 'express';
+import { UserServiceService } from 'src/app/core/services/user-service.service';
 
 @Component({
   selector: 'app-chat-input',
@@ -9,6 +12,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 })
 export class ChatInputComponent{
   @Input() chatId!: string;  // Make sure this is defined
+  @Input() roomId!: string; // Get the roomId from the selected chat
 
   @Output() messageSent = new EventEmitter<string>(); // Emit the message to the parent component
   @ViewChild('fileInput') fileInput!: ElementRef;
@@ -18,8 +22,10 @@ export class ChatInputComponent{
   currentUserId!: any;
   messages: any[] = [];
   newMessage: string = '';
-
-  constructor(private chatService: ChatServiceService, private authService: AuthService) {}
+  selectedChatId: any;
+  currentUserAvatar : any; 
+  currentUserName : any 
+  constructor(private chatService: ChatServiceService, private userService : UserServiceService, private authService: AuthService, private socketService : SocketService) {}
 
   // Send the message when the user clicks the send button or presses Enter
   // sendMessage() {
@@ -49,27 +55,51 @@ export class ChatInputComponent{
 
    // Send a new message
    sendMessage() {
-    if (this.messageText && this.chatId) {
-      // Get the current user's ID from AuthService
-      const senderId = this.authService.getCurrentUserId();  // You need to implement this in AuthService
+    if (this.messageText.trim()) {
+      this.currentUserId = this.userService.getUserId();
+      this.userService.getUserProfile(this.currentUserId).subscribe((user: any) => {
+        this.currentUserAvatar = user.profilePicture || 'assets/default-avatar.png';
+        this.currentUserName = user.username; 
+        console.log('I am from chat Input send message');
+        console.log('currentUserAvtar'+ this.currentUserAvatar);
+        console.log('currentUserName'+ this.currentUserName);
+        const  messagePayload = {
+          chatId: this.chatId,  // Ensure this is correctly set
+          message: this.messageText ,
+          sender: {
+            _id: this.currentUserId,
+            profilePicture: this.currentUserAvatar,
+            username: this.currentUserName,
+          },        
+          createdAt: new Date()  // Add timestamp when the message is sent
+          // Assuming you have this method
+          
+        };
+        console.log('Message Data from chatInput:', messagePayload);
+        this.socketService.sendMessage(messagePayload);
+        this.messageText = '';
 
-      const messagePayload = {
-        roomId: this.chatId,  // Room ID passed here
-        message: this.messageText,
-        sender: senderId // Pass the actual sender ID
-      };
+      });
+      
 
-      this.chatService.sendMessage(messagePayload).subscribe(
-        (response) => {
-          console.log('Message sent successfully:', response);
-          this.messageText = '';  // Clear input after sending
-        },
-        (error) => {
-          console.error('Error sending message:', error);
-        }
-      );
+
+      console.log("ChatID : "+ this.chatId)
+      console.log("message : "+ this.messageText)
+
+      console.log("sender : "+ this.authService.getUserId())
+
+      // this.chatService.sendMessage(this.chatId,this.messageText, this.authService.getUserId()).subscribe(
+      //   (response) => {
+      //     // Handle successful message send, clear input field
+
+      //   },
+      //   (error) => {
+      //     console.error('Error sending message:', error);
+      //   }
+      // );
     }
-  }
+
+   }
   
 
 scrollToBottom(): void {
@@ -106,6 +136,8 @@ scrollToBottom(): void {
     console.log('Uploading file:', file.name);
     // Implement file upload logic here, e.g., using ChatService or directly interacting with a file server
   }
-
+  selectChat(chatId: string) {
+    this.selectedChatId = chatId;
+  }
   
 }

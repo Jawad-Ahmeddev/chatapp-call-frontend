@@ -1,5 +1,51 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@ctrl/ngx-emoji-mart/picker';
 
-html, body { height: 100%; }
+html, body { height: 100%; 
+  background-color: var(--sidebar-background) ;
+
+}
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+:root {
+  --primary-color: #007bff;
+  --primary-text-color: #333;
+  --background-color: #f0f0f5; /* Softer background to balance dark elements */
+  --chat-background: #f9f9f9; /* Softer background for chat area */
+  --text-color: #333; /* Use darker text for contrast */
+  --input-background: #eaeaea; /* Softer input background */
+  --input-text-color: #333;
+  --sidebar-background: #d1d5db; /* Slightly darker gray with a bluish hint */
+  --header-background: #e6e8ec; /* Soft blue-gray for the header */
+  --button-background: #007bff;
+  --button-text-color: #ffffff;
+  --bg-color: #f4f6f9;
+  --input-bg-color: #ffffff;
+  --input-bg-color: #ffffff;
+    --button-bg-color: #3498db;
+    --button-hover-bg-color: #2980b9;
+    --highlight-color: #3498db;
+    --disabled-bg-color: #bdc3c7;
+}
+  
+  :root.dark-theme {
+    /* Dark Theme Colors */
+    --primary-color: #1d1d1d;
+    --primary-text-color: #e0e0e0;
+    --background-color: #2b2b2b;
+    --chat-background: #1c1c1c;
+    --text-color: #fff;
+    --input-background: #333;
+  --input-text-color: #fff;
+  --header-background: #1e1e1e;
+  --sidebar-background: #1c1c1c;
+  --button-background: #bb86fc;
+  --button-text-color: #000;
+  --bg-color: #2c3e50;
+  --input-bg-color: #34495e;
+  --button-bg-color: #2980b9;
+  --button-hover-bg-color: #3498db;
+  --highlight-color: #2980b9;
+  --disabled-bg-color: #7f8c8d;
+  }
+  

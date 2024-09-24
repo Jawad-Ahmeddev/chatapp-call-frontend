@@ -13,8 +13,7 @@ export class AuthService {
   constructor(private http : HttpClient, 
     private router: Router) { }
 
-    getUserProfile(): Observable<any> {
-      const userId = this.getUserId(); // Assuming this is stored in localStorage
+    getUserProfile(userId : any ): Observable<any> {
       return this.http.post(`${this.apiUrl}/profile`, { userId });
   }
   

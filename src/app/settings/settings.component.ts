@@ -7,14 +7,29 @@ import { Router } from '@angular/router';
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent implements OnInit {
-  currentTheme!: string;
+  currentTheme: string = 'light';
 
-  constructor(private router: Router) {}
-
-  ngOnInit(): void {
-    this.loadTheme();
+  constructor(private router: Router) {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      this.currentTheme = savedTheme;
+      this.applyTheme(this.currentTheme);
+    }
   }
 
+  ngOnInit(): void {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    this.setTheme(savedTheme);
+  }
+
+    // Apply the selected theme by adding a class to the body
+  applyTheme(theme: string) {
+    if (theme === 'dark') {
+      document.body.classList.add('dark-theme');
+    } else {
+      document.body.classList.remove('dark-theme');
+    }
+  }
   // Load the current theme from localStorage or default to 'light'
   loadTheme(): void {
     this.currentTheme = localStorage.getItem('theme') || 'light';
@@ -22,16 +37,18 @@ export class SettingsComponent implements OnInit {
   }
 
   // Change the theme and save it to localStorage
-  changeTheme(theme: string): void {
-    this.currentTheme = theme;
-    localStorage.setItem('theme', theme);
-    this.applyTheme(theme);
+  changeTheme(theme: string) {
+    this.setTheme(theme);
+    localStorage.setItem('theme', theme);  // Save theme preference
   }
 
-  // Apply the selected theme by adding a class to the body
-  applyTheme(theme: string): void {
-    document.body.classList.remove('light-theme', 'dark-theme');
-    document.body.classList.add(`${theme}-theme`);
+  setTheme(theme: string) {
+    this.currentTheme = theme;
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark-theme');
+    } else {
+      document.documentElement.classList.remove('dark-theme');
+    }
   }
 
   // Handle user logout

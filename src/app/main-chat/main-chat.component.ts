@@ -11,10 +11,10 @@ export class MainChatComponent {
   selectedChatType!: string;  // Type of the selected chat
 
   // Handle the event when a chat is selected from the sidebar
-  onChatSelected(event: { chatId: string, chatType: string }) {
-    console.log('Chat selected:', event.chatId, event.chatType);  // Check the chat ID passed from the sidebar
-    this.selectedChatId = event.chatId;
-    this.selectedChatType = event.chatType;
+  onChatSelected(chatDetails: { chatId: string, chatType: string }): void {
+    this.selectedChatId = chatDetails.chatId;
+    this.selectedChatType = chatDetails.chatType;
+    console.log('MainChatComponent: Chat selected:', this.selectedChatId); // Debug here
   }
   
   
