@@ -1,3 +1,8 @@
+
+
+
+
+
 <div class="sidebar">
   <!-- <div class="sidebar__header">
     <div class="sidebar__logo">
@@ -23,14 +28,17 @@
 
     <!-- Chat List (Toggle between Personal, Group, and Recent Chats) -->
     <div class="sidebar__chats">
-      <h3 class="chats__title">
+      <app-sidebar-loader [loading]="isLoading"></app-sidebar-loader>
+
+      <h3 class="chats__title" *ngIf="!isLoading">
         {{ showGroupChats ? 'Group Chats' : (showAllPrivateChats ? 'All Private Chats' : 'Recent Chats') }}
       </h3>
-      <ul class="chats__list">
+      <ul class="chats__list" *ngIf="!isLoading">
         <!-- Render Group Chats -->
         <ng-container *ngIf="showGroupChats">
           <li class="chats__item" *ngFor="let chat of groupChats" 
-          (click)="openChat(chat._id, chat.type)">
+          (click)="openChat(chat._id, chat.type)" [class.chat--highlight]="chat.hasNewMessage"
+          >
             <div class="chat__avatar">
               <img [src]="chat.profilePicture || 'assets/default-avatar.png'" alt="{{ chat.name }}'s avatar" class="avatar__image">
             </div>
@@ -43,17 +51,20 @@
   
         <!-- Render Personal Chats or Recent Chats -->
         <ng-container *ngIf="!showGroupChats">
-          <li class="chats__item" *ngFor="let chat of (searchTerm ? filteredPrivateChats : (showAllPrivateChats ? allPrivateChats : recentChats))" 
-          (click)="openChat(chat._id, chat.type)">
+          <li class="chats__item" 
+              *ngFor="let chat of (searchTerm ? filteredPrivateChats : (showAllPrivateChats ? allPrivateChats : recentChats))" 
+              (click)="openChat(chat._id, chat.type)"
+              [class.chat--highlight]="chat.hasNewMessage">
             <div class="chat__avatar">
               <img [src]="getProfileImage(chat.participants)" alt="{{ chat.name }}'s avatar" class="avatar__image">
             </div>
             <div class="chat__info">
               <span class="chat__name">{{ getParticipantName(chat.participants) }}</span>
-              <span class="chat__last-message">{{ chat.lastMessage?.message || 'No messages yet' }}</span>
+              <span class="chat__last-message">{{ chat.lastMessage?.message || 'No messages yet' }}</span>  <!-- Display the last message -->
             </div>
           </li>
         </ng-container>
+        
       </ul>
     </div>
 

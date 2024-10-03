@@ -27,7 +27,8 @@ export class ChatWindowComponent implements OnChanges ,AfterViewChecked, OnDestr
   chatAvatar!: string;
   currentUser: any;  // To hold the current user's info
   receiverId! : string;
-  
+  isLoading: boolean = false;
+
   @ViewChild('chatMessages') chatMessages!: ElementRef;
   messageSubscription!: Subscription;
 
@@ -163,6 +164,8 @@ export class ChatWindowComponent implements OnChanges ,AfterViewChecked, OnDestr
   
   // Load the chat messages
   loadMessages(chatId: string) {
+    this.isLoading= true;
+
     this.chatService.getMessages(chatId).subscribe((messages: any[]) => {
       this.messages = messages;
        console.log("I am from the chatWindow getmessage, ChatID :"+chatId)   
@@ -177,12 +180,19 @@ export class ChatWindowComponent implements OnChanges ,AfterViewChecked, OnDestr
         if (message.sender._id === this.currentUserId) {
           message.isCurrentUser = true; // Mark as current user's message
           this.currentUserAvatar = message.sender.profilePicture || this.currentUserAvatar;
+          this.isLoading= false;
+
           // console.log('This is the current user\'s message:', message);
         } else {
+          this.isLoading= false;
           this.fetchSenderProfile(message.sender._id); // Fetch profile data for other users
+
         }
       });
+      this.isLoading= false;
+
     })
+
     this.scrollToBottom();  // Scroll to the latest message
 
   }

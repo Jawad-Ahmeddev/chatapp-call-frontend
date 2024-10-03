@@ -32,32 +32,85 @@ export class SidebarComponent implements OnInit {
   allChats: any[] = [];     // This will store all chats fetched from the backend
   filteredChats: any[] = []; // This will store the filtered chats for display
   filteredPrivateChats: any[] = []; // This will store the filtered private chats for display
+  isLoading: boolean = false;
 
   constructor(
     private chatService: ChatServiceService,
     private router: Router,
     private authService : AuthService,
     private socketService : SocketService
-
   ) {}
 
   ngOnInit(): void {
+    console.log('Initializing sidebar component');
+
     this.userId = this.authService.getUserId() || '';
+    this.isLoading = true;
+
     // this.loadRecentChats();
     // this.loadGroupChat(); // Load the group chat in the sidebar
     this.fetchRecentChats(); // Fetch recent chats by default
     this.fetchChats();
+    console.log('Subscribing to new messages');
+
+    this.socketService.onNewMessage((message) => {
+      console.log('Subscribing to new messages', message);
+
+      this.updateChatWithNewMessage(message);
+    });
   }
 
+  updateChatWithNewMessage(message: any): void {
+    console.log('Updating chat with new message:', message);
+
+    const chat = this.recentChats.find(chat => chat._id === message.chatId);
+
+    if (chat) {
+      // Update the last message for the chat
+      console.log('Previous lastMessage:', chat.lastMessage);
+      chat.lastMessage = message.message;  // Update last message
+
+      // Highlight the chat if it's not the selected chat
+      chat.hasNewMessage = chat._id !== this.selectedChatId;
+      console.log('Updated hasNewMessage flag:', chat.hasNewMessage);
+
+      // Move the chat to the top of the list
+      this.recentChats = this.recentChats.filter(c => c._id !== message.chatId);
+      this.recentChats.unshift(chat);
+    } else {
+      // If it's a new chat, add it to the list with new message indicator
+      this.recentChats.unshift({
+        _id: message.chatId,
+        lastMessage: message.message,
+        participants: message.participants,
+        hasNewMessage: true  // Mark it as having a new message
+      });
+
+      // Join the new chat room
+      this.socketService.joinChat(message.chatId);
+    }
+  }
+  
+  
+
+
   fetchChats() {
+    console.log('Fetching all private and group chats');
+
     // Fetch all chats (personal, group, or recent) and store them
     this.chatService.getAllPrivateChats().subscribe((chats) => {
+      console.log('Fetched private chats:', chats);
+
       this.allPrivateChats = chats;
       this.filteredPrivateChats = this.allPrivateChats;  // Initially show all private chats
-    });
+    },
+    (error) => console.error('Error fetching private chats:', error));
     this.chatService.getGroupChat().subscribe((chats) => {
       this.groupChats = chats;
+      console.log('Fetched group chat:', this.groupChats);
+
     });
+    
   }
 
   filterChats() {
@@ -73,6 +126,7 @@ export class SidebarComponent implements OnInit {
       });
     }
   }
+
   togglePersonalChats(): void {
     this.showPersonalChats = !this.showPersonalChats;
     if (this.showPersonalChats) {
@@ -102,9 +156,14 @@ export class SidebarComponent implements OnInit {
   
 
   fetchRecentChats(): void {
+    console.log('Fetching recent chats');
+
     this.chatService.getRecentChats().subscribe((chats) => {
       this.recentChats = chats;
+      this.isLoading = false;
+
     });
+
   }
 
   fetchPersonalChats(): void {
@@ -141,15 +200,24 @@ export class SidebarComponent implements OnInit {
   
 
   openChat(chatId: string, chatType: string) {
+    this.selectedChatId = chatId; // Set the selected chat ID
+
+    // Mark the chat as read once opened
+    const chat = this.recentChats.find(chat => chat._id === chatId);
+    if (chat) {
+      chat.hasNewMessage = false;  // Reset new message flag when opened
+    }
+
+    // Emit the selected chat ID and type
     this.chatSelected.emit({ chatId, chatType });
     console.log('Chat selected:', chatId, chatType);
-
   }
   
   
   // Load recent chats from the chat service
   // sidebar.component.ts
   loadRecentChats() {
+
     this.chatService.getRecentChats().subscribe(
       (chats) => {
         this.recentChats = this.removeDuplicates(chats);
@@ -158,8 +226,13 @@ export class SidebarComponent implements OnInit {
       },
       (error) => {
         console.error('Failed to load recent chats: ', error);
-      }
+
+      } 
     );
+    this.recentChats.forEach(chat => {
+      this.socketService.joinChat(chat._id);
+    });
+
   }
 
   createOrJoinPersonalChat(): void {
@@ -171,6 +244,9 @@ export class SidebarComponent implements OnInit {
         this.recentChats.unshift(chat);
         this.showModal = false; // Close the modal
         this.newChatEmail = ''; // Clear the input
+        setTimeout(() => {
+            window.location.reload();  // Refresh the page to reinitialize the app
+          }, 1);
       },
       (error) => {
         console.error('Error creating or joining chat:', error);
@@ -231,13 +307,14 @@ export class SidebarComponent implements OnInit {
   loadPrivateChats() {
     this.chatService.getAllPrivateChats().subscribe(
       (chats) => {
-        this.allPrivateChats = this.removeDuplicates(chats);
+        this.allPrivateChats = chats;
       },
       (error) => {
         console.error('Failed to load private chats: ', error);
       }
     );
   }
+  
     navigateToRecentChats() {
       this.chatService.getRecentChats().subscribe(
         (chats) => {

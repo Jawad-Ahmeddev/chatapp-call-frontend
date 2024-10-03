@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Output, ViewChild, ElementRef , Input, OnChanges} from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild, ElementRef , Input} from '@angular/core';
 import { ChatServiceService } from '../../core/services/chat-service.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { SocketService } from 'src/app/core/services/socket.service';
 import { response } from 'express';
 import { UserServiceService } from 'src/app/core/services/user-service.service';
+import { EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 
 @Component({
   selector: 'app-chat-input',
@@ -25,6 +26,8 @@ export class ChatInputComponent{
   selectedChatId: any;
   currentUserAvatar : any; 
   currentUserName : any 
+  selectedFile: File | null = null;
+
   constructor(private chatService: ChatServiceService, private userService : UserServiceService, private authService: AuthService, private socketService : SocketService) {}
 
   // Send the message when the user clicks the send button or presses Enter
@@ -48,14 +51,16 @@ export class ChatInputComponent{
   //   }
   // }
 
-  addEmoji(event: any) {  // Change the type to 'any' for now
-    this.messageText += event.emoji.native;  // Add the emoji to the message input
-    this.showEmojiPicker = false;  // Close the picker after choosing an emoji
+  addEmoji(event: any) {
+    const emoji = event.emoji.native; // Accessing the native emoji
+    this.messageText += emoji;
+    console.log('Emoji added:', emoji, 'Message text:', this.messageText);
   }
 
    // Send a new message
    sendMessage() {
-    if (this.messageText.trim()) {
+    if (this.messageText.trim()|| this.selectedFile) {
+      
       this.currentUserId = this.userService.getUserId();
       this.userService.getUserProfile(this.currentUserId).subscribe((user: any) => {
         this.currentUserAvatar = user.profilePicture || 'assets/default-avatar.png';
@@ -113,8 +118,9 @@ scrollToBottom(): void {
   
 
   // Toggle the emoji picker visibility
-  toggleEmojiPicker(): void {
+  toggleEmojiPicker() {
     this.showEmojiPicker = !this.showEmojiPicker;
+    console.log(`Emoji picker toggled, current state: ${this.showEmojiPicker}`);
   }
 
   // Trigger the file input click event
@@ -123,11 +129,11 @@ scrollToBottom(): void {
   }
 
   // Handle file input change event
-  handleFileInput(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      const file = input.files[0];
-      this.uploadFile(file);
+  handleFileInput(event: any) {
+    if (event.target.files && event.target.files.length > 0) {
+      this.selectedFile = event.target.files[0];
+      console.log('File selected:', this.selectedFile);
+      // Optional: You can trigger file upload automatically or on sendMessage
     }
   }
 

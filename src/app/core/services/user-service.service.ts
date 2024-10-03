@@ -8,6 +8,7 @@ import { AuthService } from './auth.service';
 export class UserServiceService {
   private apiUrl = 'http://localhost:3001/api/auth'; // Base URL for your backend's auth routes
 
+  
   constructor(private http: HttpClient, 
     private authService : AuthService) {}
 

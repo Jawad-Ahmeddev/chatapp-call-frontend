@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
 import { UserServiceService } from '../core/services/user-service.service';
@@ -19,15 +19,24 @@ export class HeaderPageComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
-    this.loadUserProfile();
-  }
+    this.userId = this.authService.getCurrentUserId()
+
+   this.authService.getUserProfile(this.userId).subscribe(
+      (profile) => {
+        this.userProfile = profile;
+      },
+      (error) => {
+        console.error('Failed to load user profile:', error);
+      }
+    );  }
+
+  
 
     toggleDropdown(){
       this.isDropDownOpen= !this.isDropDownOpen; 
   }
 
   loadUserProfile(): void {
-    this.userId = this.authService.getCurrentUserId()
     this.userService.getUserProfile(this.userId).subscribe(
       (profile) => {
         this.userProfile = profile;
@@ -54,7 +63,9 @@ export class HeaderPageComponent implements OnInit{
   }
 
   logout(): void {
+    this.userService.logout(); // Make sure you have a logout method in your UserService
     this.authService.logout();
+    this.userProfile = null
   }
 
   logoClicked(){

@@ -8,7 +8,8 @@
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.05);
   gap: 10px; /* Add spacing between the elements */
   border-top: 1px solid var(--border-color);
-
+  width: 100%; /* Ensure full width */
+  position: relative; /* For emoji picker positioning */
 }
 
 /* Modern Button Styling */
@@ -85,13 +86,121 @@
 }
 
 /* Emoji picker */
+/* Emoji picker */
+/* Emoji picker */
 .emoji-picker {
   position: absolute;
-  bottom: 60px;
-  right: 20px;
-  background-color: white;
+  bottom: 60px; /* Adjust this based on the height of the input area */
+  right: 20px; /* Adjust this based on where you want the emoji picker aligned */
+  background-color: var(--primary-color);
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
   border-radius: 12px;
   z-index: 1000;
   overflow: hidden;
+  width: 300px; /* Adjust width if necessary */
+}
+
+
+.chat-input__file-button {
+  background-color: var(--button-background);
+  border: none;
+  color: var(--button-text-color);
+  font-size: 22px;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+/* Responsive Design */
+
+/* For large screens (min-width: 1024px) */
+@media (min-width: 1024px) {
+  .chat-input__field {
+    font-size: 18px;
+    padding: 14px 18px;
+  }
+
+  .modern-button {
+    font-size: 24px;
+    padding: 12px;
+  }
+
+  .chat-input__send-button {
+    font-size: 20px;
+    padding: 12px;
+  }
+}
+
+/* For tablets and medium screens (max-width: 1024px) */
+@media (max-width: 1024px) {
+  .chat-input-container {
+    padding: 8px;
+  }
+
+  .chat-input__field {
+    font-size: 16px;
+    padding: 10px 14px;
+  }
+
+  .modern-button {
+    font-size: 20px;
+    padding: 10px;
+  }
+
+  .chat-input__send-button {
+    font-size: 18px;
+    padding: 10px;
+  }
+}
+
+/* For small screens (max-width: 768px) */
+@media (max-width: 768px) {
+  .chat-input-container {
+    padding: 8px;
+    gap: 5px; /* Reduce spacing for smaller screens */
+  }
+
+  .chat-input__field {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+
+  .modern-button {
+    font-size: 18px;
+    padding: 8px;
+  }
+
+  .chat-input__send-button {
+    font-size: 16px;
+    padding: 8px;
+  }
+}
+
+/* For extra small screens (max-width: 576px) */
+@media (max-width: 576px) {
+  .chat-input-container {
+    padding: 6px;
+    gap: 4px;
+  }
+
+  .chat-input__field {
+    font-size: 13px;
+    padding: 6px 10px;
+  }
+
+  .modern-button {
+    font-size: 16px;
+    padding: 6px;
+  }
+
+  .chat-input__send-button {
+    font-size: 14px;
+    padding: 6px;
+  }
 }

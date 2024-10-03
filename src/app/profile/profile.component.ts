@@ -13,6 +13,8 @@ export class ProfileComponent implements OnInit {
   userProfile: any = {}; // Initialize as an empty object
   selectedFile: File | null = null;
   userId : any = '';
+  isLoading: boolean = false;
+
   constructor(
     private fb: FormBuilder,
     private userService: UserServiceService,
@@ -33,6 +35,8 @@ export class ProfileComponent implements OnInit {
   // Load user profile data
 
   loadUserProfile(): void {
+    this.isLoading = true;
+
     this.userId = this.authService.getUserId();
     this.userService.getUserProfile(this.userId).subscribe(
         (profile) => {
@@ -41,9 +45,13 @@ export class ProfileComponent implements OnInit {
                 username: profile.username,
                 email: profile.email
             });
+            this.isLoading = false;
+
         },
         (error) => {
             console.error('Error loading profile', error);
+            this.isLoading = false;
+
         }
     );
 }

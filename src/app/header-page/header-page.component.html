@@ -7,7 +7,7 @@
   </div>
 
   <!-- User Profile and Actions -->
-  <div class="header__profile">
+  <div class="header__profile" *ngIf="userProfile">
     <div class="profile__dropdown">
       <!-- Bind the user's profile picture and name -->
       <img [src]="userProfile?.profilePicture || 'assets/default-avatar.png'" alt="User Avatar" class="profile__avatar">

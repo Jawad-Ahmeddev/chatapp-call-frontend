@@ -113,7 +113,7 @@
 /* Styling for outgoing messages */
 .message--outgoing .message__content {
   background-color: var(--primary-color);
-  color: var(--text-color);
+  color: #fff;
   border: none;
 }
 
@@ -135,3 +135,208 @@
   font-weight: bold;
   margin-bottom: 5px;
 }
+
+/* Responsive Design */
+
+/* For tablets (max-width: 1024px) */
+@media (max-width: 1024px) {
+  .chat-header__avatar {
+    width: 40px;
+    height: 40px;
+  }
+
+  .chat-header__details h2 {
+    font-size: 18px;
+    margin: 0;
+    color: var(--text-color);
+  }
+  
+  .chat-header__details p {
+    margin: 0;
+    font-size: 13px;
+    color: var(--input-text-color);
+  }
+  
+  /* Messages Area */
+  .chat-window__messages {
+    flex-grow: 1;
+    padding: 15px;
+    overflow-y: auto;
+    background-color: var(--background-color);
+    scrollbar-width: thin;
+  }
+  
+  /* General message container */
+  .chat-message {
+    display: flex;
+    margin-bottom: 15px;
+    width: 100%; /* Ensure messages take up the full width of the container */
+  }
+  
+  /* Wrapper for left-aligned messages (incoming) */
+  .message__wrapper--left {
+    justify-content: flex-start;
+    text-align: left;
+    flex-direction: row; /* Keep the avatar on the left */
+    align-items: flex-start;
+    width: 100%;
+  }
+  
+  .message__wrapper--left .message__avatar {
+    margin-right: 10px;
+  }
+  
+  /* Wrapper for right-aligned messages (outgoing) */
+  .message__wrapper--right {
+    justify-content: flex-end;
+    text-align: right;
+    flex-direction: row-reverse; /* Move avatar to the right */
+    align-items: flex-end;
+    width: 100%;
+  }
+  
+  .message__wrapper--right .message__avatar {
+    margin-left: 10px;
+  }
+  
+  /* Message content styling */
+  .message__content {
+    padding: 12px 18px;
+    border-radius: 12px;
+    max-width: 70%; /* Limit the message width */
+    display: inline-block;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Adds a modern shadow */
+  }
+  
+  /* Avatar styling */
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  
+  /* Styling for incoming messages */
+  .message--incoming .message__content {
+    background-color: var(--input-background);
+    color: var(--primary-text-color);
+    border: 1px solid #ddd;
+  }
+  
+  /* Styling for outgoing messages */
+  .message--outgoing .message__content {
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+  }
+  
+  /* Text and time styling */
+  .message__text {
+    margin: 0;
+    font-size: 16px;
+  }
+  
+  .message__time {
+    display: block;
+    margin-top: 5px;
+    font-size: 12px;
+    color: #999;
+  }
+  
+  .message__sender-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  /* Responsive Design */
+  
+  /* For tablets and larger screens (min-width: 768px) */
+  @media (min-width: 768px) {
+    .chat-window {
+      border-radius: 15px;
+    }
+  
+    .chat-header__avatar {
+      width: 50px;
+      height: 50px;
+    }
+  
+    .chat-header__details h2 {
+      font-size: 20px;
+    }
+  
+    .chat-header__details p {
+      font-size: 14px;
+    }
+  
+    .message__content {
+      max-width: 60%;
+    }
+  }
+  
+  /* For small screens (max-width: 768px) */
+  @media (max-width: 768px) {
+    .chat-window__header {
+      padding: 15px;
+    }
+  
+    .chat-header__avatar {
+      width: 35px;
+      height: 35px;
+      margin-right: 10px;
+    }
+  
+    .chat-header__details h2 {
+      font-size: 16px;
+    }
+  
+    .chat-header__details p {
+      font-size: 12px;
+    }
+  
+    .chat-window__messages {
+      padding: 10px;
+    }
+  
+    .message__content {
+      max-width: 80%;
+      padding: 10px 15px;
+    }
+  
+    .message__text {
+      font-size: 15px;
+    }
+  
+    .message__time {
+      font-size: 11px;
+    }
+  }
+  
+  /* For very small screens (max-width: 576px) */
+  @media (max-width: 576px) {
+    .chat-header__avatar {
+      width: 30px;
+      height: 30px;
+      margin-right: 8px;
+    }
+  
+    .chat-header__details h2 {
+      font-size: 14px;
+    }
+  
+    .chat-header__details p {
+      font-size: 11px;
+    }
+  
+    .message__content {
+      max-width: 90%;
+      padding: 8px 12px;
+    }
+  
+    .message__text {
+      font-size: 14px;
+    }
+  
+    .message__time {
+      font-size: 10px;
+    }
+  }}

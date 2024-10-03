@@ -1,0 +1,39 @@
+.loader-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent dark background to dim content */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+  
+  .dual-ring-loader {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+  }
+  .dual-ring-loader:after {
+    content: " ";
+    display: block;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 6px solid #fff;
+    border-color: #3498db transparent #3498db transparent; /* Dark blue for the theme */
+    animation: dual-ring-spin 1.2s linear infinite;
+  }
+  
+  @keyframes dual-ring-spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  

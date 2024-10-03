@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderPageComponent } from './header-page/header-page.component';
@@ -27,6 +26,10 @@ import { CoreComponent } from './core/core.component';
 import { ComponentsComponent } from './shared/components/components.component';
 import { DirectivesComponent } from './shared/directives/directives.component';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
+import { LoaderComponent } from './loader/loader.component';
+import { SidebarLoaderComponent } from './sidebar-loader/sidebar-loader.component';
+import { ChatwindowLoaderComponent } from './chatwindow-loader/chatwindow-loader.component';
+import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 
 @NgModule({
   declarations: [
@@ -45,6 +48,9 @@ import { PickerComponent } from '@ctrl/ngx-emoji-mart';
     CoreComponent,
     ComponentsComponent,
     DirectivesComponent,
+    LoaderComponent,
+    SidebarLoaderComponent,
+    ChatwindowLoaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,8 +64,9 @@ import { PickerComponent } from '@ctrl/ngx-emoji-mart';
     MatIconModule, // Only if using Angular Material
     FontAwesomeModule ,// For 
     AppRoutingModule, 
-    PickerComponent
-    
+    PickerComponent,
+    EmojiModule,  // Use EmojiModule instead of NgxEmojiModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

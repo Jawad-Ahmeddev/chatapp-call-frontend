@@ -19,12 +19,9 @@ export class SocketService {
 
     // Emit event for sending a new message
   sendMessage(messageData: any) {
-        console.log('Sending message through socket :', messageData);
-
+    console.log('Sending message through socket :', messageData);
     this.socket.emit('message', messageData);
-
   }
-    
 
   // Listen for new incoming messages
   receiveMessage(): Observable<any> {
@@ -40,7 +37,16 @@ export class SocketService {
   
 
   onNewMessage(callback: (message: any) => void) {
-    this.socket.on('message', callback);
+    console.log('Listening for new messages via socket');
+  
+    // Remove any previous listeners to avoid duplication
+    this.socket.off('message');
+    
+    // Attach a new listener for the 'message' event
+    this.socket.on('message', (message: any) => {
+      console.log('Message received from socket:', message);
+      callback(message);
+    });
   }
 
   joinChat(chatId: string) {
@@ -51,7 +57,6 @@ export class SocketService {
     this.socket.emit('joinChat', chatId);
     console.log(`Socket joined chat room: ${chatId}`);
     this.isConnected = true;
-
   }
 
   disconnect() {

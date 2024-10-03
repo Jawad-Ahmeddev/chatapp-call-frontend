@@ -47,6 +47,9 @@ export class LoginComponent implements OnInit{
         (response) => {
           localStorage.setItem('userId', response.userId); // Store the user ID
           this.router.navigate(['/chat']); // Ensure this path matches the route for MainChatComponent
+          setTimeout(() => {
+            window.location.reload();  // Refresh the page to reinitialize the app
+          }, 1);
         },
         (error) => {
           console.error('Login failed:', error);

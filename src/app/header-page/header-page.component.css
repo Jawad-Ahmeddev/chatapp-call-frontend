@@ -11,12 +11,15 @@
   
   /* Logo Section */
   .header__logo {
+    cursor: pointer;
     display: flex;
     align-items: center;
-    cursor: pointer;
+   
+
   }
   
   .logo__image {
+    cursor: pointer;
     height: 40px;
     margin-right: 10px;
   }
@@ -24,6 +27,7 @@
   .logo__text {
     font-size: 1.5rem;
     font-weight: bold;
+    cursor: pointer;
   }
   
   /* Profile Section */
@@ -98,18 +102,54 @@
   }
   
   /* Responsive Design */
-  @media (max-width: 768px) {
-    .header {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  
-    .header__logo {
-      margin-bottom: 10px;
-    }
-  
-    .profile__name {
-      display: none;
-    }
+ /* For small screens (max-width: 768px) */
+@media (max-width: 768px) {
+  .header {
+      padding: 10px 15px;
   }
+
+  .logo__text {
+      font-size: 1.3rem;
+  }
+
+  .profile__avatar {
+      height: 35px;
+      width: 35px;
+      margin-right: 5px;
+  }
+
+  .profile__name {
+      display: none; /* Hide the name on small screens to save space */
+  }
+}
+
+/* For very small screens (max-width: 576px) */
+@media (max-width: 576px) {
+  .header {
+      padding: 8px 10px;
+  }
+
+  .logo__image {
+      height: 30px;
+      margin-right: 5px;
+  }
+
+  .logo__text {
+      font-size: 1.2rem;
+  }
+
+  .profile__avatar {
+      height: 30px;
+      width: 30px;
+      margin-right: 5px;
+  }
+
+  .dropdown__item {
+      padding: 8px 15px;
+  }
+
+  .dropdown__item i {
+      font-size: 0.9rem;
+  }
+}
   

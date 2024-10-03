@@ -179,22 +179,56 @@
   }
   
   /* Responsive Design */
-  @media (max-width: 768px) {
-    .login-form-wrapper {
+  /* For small screens (max-width: 768px) */
+@media (max-width: 768px) {
+  .login-form-wrapper {
       padding: 30px;
       max-width: 100%;
-    }
-  
-    .login-title {
-      font-size: 1.5rem;
-    }
-  
-    .form-input {
-      font-size: 0.9rem;
-    }
-  
-    .login-button {
-      font-size: 1rem;
-    }
   }
-  
+
+  .login-title {
+      font-size: 1.5rem;
+  }
+
+  .form-input {
+      font-size: 0.9rem;
+  }
+
+  .login-button {
+      font-size: 1rem;
+  }
+}
+
+/* For very small screens (max-width: 576px) */
+@media (max-width: 576px) {
+  .login-form-wrapper {
+      padding: 20px;
+      max-width: 100%;
+  }
+
+  .login-title {
+      font-size: 1.3rem;
+  }
+
+  .form-input {
+      padding: 8px 12px;
+      font-size: 0.85rem;
+  }
+
+  .form-label {
+      font-size: 0.8rem;
+  }
+
+  .login-button {
+      padding: 8px 12px;
+      font-size: 0.9rem;
+  }
+
+  .login-footer p {
+      font-size: 0.8rem;
+  }
+
+  .login-footer a {
+      font-size: 0.9rem;
+  }
+}

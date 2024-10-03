@@ -131,28 +131,77 @@
     }
   }
   
-  /* Responsive Design */
   @media (max-width: 768px) {
     .profile-container {
-      padding: 15px;
-      max-width: 100%;
+        padding: 15px;
+        max-width: 100%;
     }
-  
+
     .profile-title {
-      font-size: 1.5rem;
+        font-size: 1.5rem;
     }
-  
+
     .profile-picture {
-      width: 100px;
-      height: 100px;
+        width: 100px;
+        height: 100px;
     }
-  
+
     .upload-button {
-      font-size: 0.8rem;
+        font-size: 0.8rem;
     }
-  
+
     .save-button {
-      font-size: 1rem;
+        font-size: 1rem;
     }
-  }
-  
+}
+
+/* For very small screens (max-width: 576px) */
+@media (max-width: 576px) {
+    .profile-container {
+        padding: 10px;
+        width: 100%;
+    }
+
+    .profile-title {
+        font-size: 1.3rem;
+    }
+
+    .profile-picture {
+        width: 80px;
+        height: 80px;
+    }
+
+    .upload-button {
+        font-size: 0.75rem;
+        padding: 6px 15px;
+    }
+
+    .save-button {
+        font-size: 0.9rem;
+    }
+
+    .form-input {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+
+    .form-label {
+        font-size: 0.8rem;
+    }
+}
+
+/* For larger screens (min-width: 1024px) */
+@media (min-width: 1024px) {
+    .profile-container {
+        max-width: 600px;
+    }
+
+    .profile-title {
+        font-size: 2rem;
+    }
+
+    .profile-picture {
+        width: 120px;
+        height: 120px;
+    }
+}

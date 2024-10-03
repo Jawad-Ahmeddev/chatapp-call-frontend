@@ -1,9 +1,11 @@
 <div class="profile-container">
+  <app-loader [loading]="isLoading"></app-loader>
+
   <div class="profile-header">
     <h2 class="profile-title">My Profile</h2>
   </div>
 
-  <div class="profile-content">
+  <div class="profile-content" *ngIf="!isLoading">
     <!-- Profile Picture Section -->
     <div class="profile-picture-section">
       <img [src]="userProfile?.profilePicture || 'assets/default-avatar.png'" 

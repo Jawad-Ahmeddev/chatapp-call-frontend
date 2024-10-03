@@ -17,12 +17,11 @@ export class AuthService {
       return this.http.post(`${this.apiUrl}/profile`, { userId });
   }
   
-
-
   updateUserProfile(profileData: any): Observable<any> {
     const userId = this.getUserId();
     return this.http.put(`${this.apiUrl}/profile/${userId}`, profileData);
   }
+  
     updateProfilePicture(formData: FormData): Observable<any> {
       const userId = this.getUserId();
       return this.http.put(`${this.apiUrl}/profile/${userId}`, formData);
