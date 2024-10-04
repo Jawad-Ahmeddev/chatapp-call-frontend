@@ -36,16 +36,10 @@ export class SocketService {
   }
   
 
-  onNewMessage(callback: (message: any) => void) {
-    console.log('Listening for new messages via socket');
-  
-    // Remove any previous listeners to avoid duplication
-    this.socket.off('message');
-    
-    // Attach a new listener for the 'message' event
-    this.socket.on('message', (message: any) => {
-      console.log('Message received from socket:', message);
-      callback(message);
+  onNewMessage(callback: (messageData: any) => void): void {
+    this.socket.on('message', (messageData: any) => {
+      console.log('Message received via socket:', messageData);
+      callback(messageData);
     });
   }
 

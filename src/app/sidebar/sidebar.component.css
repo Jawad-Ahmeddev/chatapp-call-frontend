@@ -22,9 +22,21 @@
   }
   .new-message {
     font-weight: bold;
-    background-color: rgba(0, 123, 255, 0.1);  /* Light blue for unread messages */
+    background-color: #007bff1a; /* Light blue background */
+    border-left: 4px solid #007bff; /* Blue bar on the left for better visibility */
+    color: #007bff; /* Darker blue text */
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+    border-radius: 4px; /* Rounded corners */
+    transition: background-color 0.3s, border-color 0.3s; /* Smooth transition */
+}
+
+.new-message:hover {
+  background-color: #007bff33; /* Slightly darker on hover */
+  border-left-color: #0056b3; /* Darker blue border on hover */
+}
+  .chat--highlight {
+    background-color: rgba(0, 123, 255, 0.1);  /* Highlight new message */
   }
-  
   .logo__image {
     width: 40px;
     height: 40px;

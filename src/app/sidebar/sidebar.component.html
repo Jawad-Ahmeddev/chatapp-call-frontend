@@ -37,8 +37,8 @@
         <!-- Render Group Chats -->
         <ng-container *ngIf="showGroupChats">
           <li class="chats__item" *ngFor="let chat of groupChats" 
-          (click)="openChat(chat._id, chat.type)" [class.chat--highlight]="chat.hasNewMessage"
-          >
+          (click)="openChat(chat._id, chat.type)" 
+          [class.new-message]="chat.hasNewMessage && chat.lastMessage.sender !== userId">          >
             <div class="chat__avatar">
               <img [src]="chat.profilePicture || 'assets/default-avatar.png'" alt="{{ chat.name }}'s avatar" class="avatar__image">
             </div>
@@ -54,7 +54,7 @@
           <li class="chats__item" 
               *ngFor="let chat of (searchTerm ? filteredPrivateChats : (showAllPrivateChats ? allPrivateChats : recentChats))" 
               (click)="openChat(chat._id, chat.type)"
-              [class.chat--highlight]="chat.hasNewMessage">
+              [class.new-message]="chat.hasNewMessage">
             <div class="chat__avatar">
               <img [src]="getProfileImage(chat.participants)" alt="{{ chat.name }}'s avatar" class="avatar__image">
             </div>

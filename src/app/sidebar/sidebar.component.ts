@@ -1,4 +1,4 @@
-import { Component , OnInit } from '@angular/core';
+import { Component , OnInit,OnChanges,SimpleChanges, DoCheck  } from '@angular/core';
 import { Router } from '@angular/router';
 import { ChatServiceService } from '../core/services/chat-service.service';
 import {  Output} from '@angular/core';
@@ -10,7 +10,7 @@ import { SocketService } from '../core/services/socket.service';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit,OnChanges, DoCheck {
   personalChats: any[] = [];
   groupChat: any = null;
   groupChatId = '64eaa9ed13649663736b0d05';  // Group chat ID
@@ -33,6 +33,8 @@ export class SidebarComponent implements OnInit {
   filteredChats: any[] = []; // This will store the filtered chats for display
   filteredPrivateChats: any[] = []; // This will store the filtered private chats for display
   isLoading: boolean = false;
+  newMessageChatId = null;  // To track new messages
+  private previousChatsState :any = [];
 
   constructor(
     private chatService: ChatServiceService,
@@ -52,45 +54,74 @@ export class SidebarComponent implements OnInit {
     this.fetchRecentChats(); // Fetch recent chats by default
     this.fetchChats();
     console.log('Subscribing to new messages');
-
     this.socketService.onNewMessage((message) => {
-      console.log('Subscribing to new messages', message);
-
+      console.log('Message received from socket:', message);
       this.updateChatWithNewMessage(message);
     });
+   
   }
+  ngDoCheck() {
+    // Manually trigger updates to check for any changes
+    this.socketService.onNewMessage((message) => {
+      console.log('Message received from socket:', message);
+      this.updateChatWithNewMessage(message);
+    });
 
-  updateChatWithNewMessage(message: any): void {
-    console.log('Updating chat with new message:', message);
-
-    const chat = this.recentChats.find(chat => chat._id === message.chatId);
-
-    if (chat) {
-      // Update the last message for the chat
-      console.log('Previous lastMessage:', chat.lastMessage);
-      chat.lastMessage = message.message;  // Update last message
-
-      // Highlight the chat if it's not the selected chat
-      chat.hasNewMessage = chat._id !== this.selectedChatId;
-      console.log('Updated hasNewMessage flag:', chat.hasNewMessage);
-
-      // Move the chat to the top of the list
-      this.recentChats = this.recentChats.filter(c => c._id !== message.chatId);
-      this.recentChats.unshift(chat);
-    } else {
-      // If it's a new chat, add it to the list with new message indicator
-      this.recentChats.unshift({
-        _id: message.chatId,
-        lastMessage: message.message,
-        participants: message.participants,
-        hasNewMessage: true  // Mark it as having a new message
-      });
-
-      // Join the new chat room
-      this.socketService.joinChat(message.chatId);
+    if (JSON.stringify(this.recentChats) !== JSON.stringify(this.previousChatsState)) {
+      this.previousChatsState = [...this.recentChats];  // Save the state
+      // Force update for UI
     }
   }
   
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['newMessage'] && changes['newMessage'].currentValue) {
+      console.log('Change detected in newMessage:', changes['newMessage'].currentValue);
+      this.updateChatWithNewMessage(changes['newMessage'].currentValue);
+    }
+  }
+
+
+  handleNewMessage(message:any) {
+    const chatId = message.chatId;
+    this.newMessageChatId = chatId;
+
+    // Find the chat in recent chats or private chats
+    const chat = this.recentChats.find(chat => chat._id === chatId) || 
+                 this.allPrivateChats.find(chat => chat._id === chatId);
+    
+    if (chat) {
+      chat.hasNewMessage = true;  // Set the chat as having a new message
+      chat.lastMessage = message;  // Update the last message
+
+      // Move the chat to the top
+      this.moveChatToTop(chat);
+    }
+  }
+
+  moveChatToTop(chat:any) {
+    // Remove the chat from its current position
+    this.recentChats = this.recentChats.filter(c => c._id !== chat._id);
+    this.allPrivateChats = this.allPrivateChats.filter(c => c._id !== chat._id);
+    
+    // Re-insert the chat at the top
+    this.recentChats.unshift(chat);
+  }
+  updateChatWithNewMessage(message: any) {
+  console.log('Updating chat with new message:', message);
+
+  // Find the chat where the new message belongs
+  let chatToUpdate = this.recentChats.find(chat => chat._id === message.chatId);
+  
+  if (chatToUpdate) {
+    // Update lastMessage and mark as having a new message
+    chatToUpdate.lastMessage = message;
+    chatToUpdate.hasNewMessage = true;  // Set a flag to indicate a new message for highlighting
+    
+    // Move the updated chat to the top
+    this.recentChats = [chatToUpdate, ...this.recentChats.filter(chat => chat._id !== message.chatId)];
+  }
+}
   
 
 
