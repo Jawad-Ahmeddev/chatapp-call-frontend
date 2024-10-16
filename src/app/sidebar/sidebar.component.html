@@ -18,10 +18,10 @@
   <div class="sidebar__menu">
     <ul class="menu__list">
       <li class="menu__item"  (click)="toggleGroupChats()">
-        <i class="fas fa-users"></i> Group Chats
+        <i class="fas fa-users"></i> Community
       </li>
       <li class="menu__item" (click)="togglePrivateChats()"  (click)="showAllPrivateChats">
-        <i class="fas fa-user-friends"></i> Personal Chats
+        <i class="fas fa-user-friends"></i> All Chats
       </li>
     </ul>
   </div>
@@ -38,13 +38,13 @@
         <ng-container *ngIf="showGroupChats">
           <li class="chats__item" *ngFor="let chat of groupChats" 
           (click)="openChat(chat._id, chat.type)" 
-          [class.new-message]="chat.hasNewMessage && chat.lastMessage.sender !== userId">          >
+          [class.new-message]="chat.hasNewMessage && chat.lastMessage.sender !== userId">          
             <div class="chat__avatar">
               <img [src]="chat.profilePicture || 'assets/default-avatar.png'" alt="{{ chat.name }}'s avatar" class="avatar__image">
             </div>
             <div class="chat__info">
               <span class="chat__name">{{ chat.name }}</span>
-              <span class="chat__last-message">{{ chat.lastMessage?.message || 'No messages yet' }}</span>
+              <span class="chat__last-message">{{ 'Meet new People' }}</span>
             </div>
           </li>
         </ng-container>
@@ -60,15 +60,18 @@
             </div>
             <div class="chat__info">
               <span class="chat__name">{{ getParticipantName(chat.participants) }}</span>
-              <span class="chat__last-message">{{ chat.lastMessage?.message || 'No messages yet' }}</span>  <!-- Display the last message -->
-            </div>
+              <span class="chat__last-message">
+                {{ chat.lastMessage?.message ? 
+                   (chat.lastMessage?.message.length > 10 ? chat.lastMessage?.message.slice(0, 10) + '...' : chat.lastMessage?.message) 
+                   : 'No New Message' }}
+              </span>            </div>
           </li>
         </ng-container>
         
       </ul>
     </div>
 
-  <button class="new-chat-button" (click)="showModal = true">+ New Chat</button>
+  <button class="new-chat-button" (click)="showModal = true">+ Add New Chat</button>
 
   <div class="sidebar__footer">
     <button class="footer__button" (click)="goToSettings()">

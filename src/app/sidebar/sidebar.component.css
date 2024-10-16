@@ -22,21 +22,39 @@
   }
   .new-message {
     font-weight: bold;
-    background-color: #007bff1a; /* Light blue background */
-    border-left: 4px solid #007bff; /* Blue bar on the left for better visibility */
-    color: #007bff; /* Darker blue text */
-    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
-    border-radius: 4px; /* Rounded corners */
-    transition: background-color 0.3s, border-color 0.3s; /* Smooth transition */
+    background-color: #e0f7fa; /* Light teal background for better visibility */
+    border-left: 4px solid #007bff; /* Blue left border for distinct highlighting */
+    color: #007bff; /* Blue text color */
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.2); /* More pronounced shadow for focus */
+    border-radius: 6px; /* Softer, rounded corners */
+    padding: 10px; /* Add some padding for better readability */
+    margin-bottom: 5px; /* Space between messages */
+    transition: background-color 0.3s ease, border-color 0.3s ease; /* Smooth transition on hover */
 }
 
 .new-message:hover {
-  background-color: #007bff33; /* Slightly darker on hover */
-  border-left-color: #0056b3; /* Darker blue border on hover */
+  background-color: #b2ebf2; /* Slightly darker teal on hover */
+  border-left-color: #0288d1; /* Darker blue border on hover */
 }
-  .chat--highlight {
-    background-color: rgba(0, 123, 255, 0.1);  /* Highlight new message */
-  }
+.chat--highlight {
+  background-color: rgba(0, 123, 255, 0.2);  /* Increase highlight visibility */
+  border-radius: 6px; /* Rounded corners */
+}
+
+.sender-message {
+  background-color: #f1f1f1; /* Light gray background for messages sent by the sender */
+  border-left: 4px solid #007bff; /* Blue border for sent messages */
+  color: #333; /* Regular dark text */
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 5px;
+}
+
+.chat--sender {
+  background-color: #f9f9f9; /* Very light background for distinction */
+  border-radius: 6px;
+}
+
   .logo__image {
     width: 40px;
     height: 40px;
@@ -229,25 +247,28 @@
 
 /* Modal Styling */
 .modal {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
+  position: fixed; /* Fixed to viewport */
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.5); /* Adds a dark transparent background */
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  z-index: 1000; /* Ensures it stays above other content */
 }
 
 .modal__content {
-  background-color: #fff;
+  position: relative;
+
+  background-color: var(--background-color);
   padding: 20px;
-  border-radius: 8px;
-  max-width: 400px;
-  width: 100%;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  border-radius: 10px; /* Softer rounded corners */
+  max-width: 100%; /* Ensure it doesn't overflow */
+  width: 300px; /* Set a width */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  color: var(--text-color);
 }
 
 .modal__input {
@@ -255,16 +276,17 @@
   padding: 10px;
   margin-bottom: 10px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 5px; /* Rounded corners for input */
+  font-size: 16px; /* Increase input text size */
 }
 
 .modal__button {
   width: 100%;
   padding: 10px;
   background-color: #007bff;
-  color: #fff;
+  color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
   text-align: center;
   font-size: 16px;
@@ -277,10 +299,13 @@
 
 .close {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 15px;
+  right: 20px;
   font-size: 24px;
   cursor: pointer;
+  color:var(--text-color);
+  font-weight: bold;
+
 }
 .chat__avatar {
   width: 40px;

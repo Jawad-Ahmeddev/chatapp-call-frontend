@@ -65,8 +65,8 @@ import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
     FontAwesomeModule ,// For 
     AppRoutingModule, 
     PickerComponent,
-    EmojiModule,  // Use EmojiModule instead of NgxEmojiModule
-
+    EmojiModule,
+   
   ],
   providers: [],
   bootstrap: [AppComponent]

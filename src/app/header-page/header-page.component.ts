@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, HostListener, OnInit, OnChanges, SimpleChanges, ChangeDetectorRef } from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
 import { UserServiceService } from '../core/services/user-service.service';
@@ -15,7 +15,8 @@ export class HeaderPageComponent implements OnInit{
   constructor(
     private authService: AuthService,
     private userService: UserServiceService,
-    private router: Router
+    private router: Router,
+    private cdr : ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {

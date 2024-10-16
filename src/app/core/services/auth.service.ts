@@ -16,6 +16,10 @@ export class AuthService {
     getUserProfile(userId : any ): Observable<any> {
       return this.http.post(`${this.apiUrl}/profile`, { userId });
   }
+
+  checkEmailExists(email: string) {
+    return this.http.post(`${this.apiUrl}/checkEmail`, { email });
+  }
   
   updateUserProfile(profileData: any): Observable<any> {
     const userId = this.getUserId();

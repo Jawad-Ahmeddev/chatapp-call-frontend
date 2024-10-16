@@ -58,4 +58,8 @@ export class SocketService {
       this.socket.disconnect();
     }
   }
+  sendTokenToServer(userId : string,token: string) {
+    
+    this.socket.emit('registerToken',{ userId, token }); // Emit the token to the backend
+  }
 }

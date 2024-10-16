@@ -35,6 +35,9 @@
           <div *ngIf="isControlInvalid('email')" class="error-message">
             Please enter a valid email.
           </div>
+          <div *ngIf="signupForm.get('email')?.hasError('emailTaken')" class="error-message">
+            Email is already taken.
+          </div>
         </div>
         
         <!-- Password Field -->

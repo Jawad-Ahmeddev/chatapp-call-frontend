@@ -62,9 +62,16 @@ export class SidebarComponent implements OnInit,OnChanges, DoCheck {
   }
   ngDoCheck() {
     // Manually trigger updates to check for any changes
+    
     this.socketService.onNewMessage((message) => {
-      console.log('Message received from socket:', message);
+      if (message.sender._id == this.userId) {
+        this.fetchRecentChats(); // Fetch recent chats by default
+      }
+      else{
+        console.log('Message received from socket:', message);
       this.updateChatWithNewMessage(message);
+      }
+      
     });
 
     if (JSON.stringify(this.recentChats) !== JSON.stringify(this.previousChatsState)) {

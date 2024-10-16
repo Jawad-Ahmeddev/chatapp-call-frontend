@@ -11,6 +11,7 @@ import { AuthService } from '../core/services/auth.service';
 export class LoginComponent implements OnInit{
   loginForm!: FormGroup;
   showPassword = false;
+  errorMessage = ''; // For error handling
 
   constructor(
     private fb: FormBuilder,
@@ -22,7 +23,7 @@ export class LoginComponent implements OnInit{
   ngOnInit(): void {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
+      password: ['',[ Validators.required, Validators.minLength(6)]]
     });
   }
 
@@ -40,11 +41,20 @@ export class LoginComponent implements OnInit{
   // Handle form submission
   onSubmit(): void {
     console.log("I am in login from")
+    if (this.loginForm.invalid) {
+      // Apply shake animation for invalid form
+      this.addShakeAnimation();
+      this.errorMessage = 'Please enter valid credentials.';
+      return;
+    }
   console.log('Form submitted:', this.loginForm.value);
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
       this.authService.login(email, password).subscribe(
         (response) => {
+          this.errorMessage = '';
+
+          this.addSuccessAnimation();
           localStorage.setItem('userId', response.userId); // Store the user ID
           this.router.navigate(['/chat']); // Ensure this path matches the route for MainChatComponent
           setTimeout(() => {
@@ -52,9 +62,26 @@ export class LoginComponent implements OnInit{
           }, 1);
         },
         (error) => {
+          this.errorMessage = 'Invalid email or password';
+
           console.error('Login failed:', error);
+          this.addShakeAnimation();  // Apply shake animation for incorrect login
+
         }
       );
     }
   }
+  addShakeAnimation(): void {
+    const form = document.querySelector('.login-form-wrapper');
+    form?.classList.add('shake-animation');
+    setTimeout(() => {
+      form?.classList.remove('shake-animation');
+    }, 500); // Remove the animation class after 0.5 seconds
+  }
+
+  addSuccessAnimation(): void {
+    const form = document.querySelector('.login-form-wrapper');
+    form?.classList.add('success-animation');
+  }
+ 
 }

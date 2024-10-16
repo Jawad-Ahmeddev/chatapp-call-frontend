@@ -23,7 +23,9 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/manifest.webmanifest",
+              "src/firebase-messaging-sw.js"
             ],
             "styles": [
               "@angular/material/prebuilt-themes/indigo-pink.css",
@@ -31,7 +33,9 @@
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "node_modules/@ctrl/ngx-emoji-mart/picker.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "serviceWorker": true,
+            "ngswConfigPath": "src/ngsw-config.json"
           },
           "configurations": {
             "production": {
@@ -88,7 +92,9 @@
             "tsConfig": "tsconfig.spec.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/manifest.webmanifest",
+              "src/firebase-messaging-sw.js"
             ],
             "styles": [
               "@angular/material/prebuilt-themes/indigo-pink.css",
