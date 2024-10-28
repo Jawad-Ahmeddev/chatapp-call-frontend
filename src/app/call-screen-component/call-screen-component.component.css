@@ -1,0 +1,92 @@
+.call-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    background-color: var(--background-color);
+    position: relative;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  /* Video Call UI */
+  .video-call-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .local-video, .remote-video {
+    width: 45%;
+    max-width: 600px;
+    border-radius: 15px;
+    margin: 0 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Audio Call UI */
+  .audio-call-ui {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .caller-avatar {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .caller-name {
+    color: var(--primary-text-color);
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .caller-status {
+    color: var(--primary-text-color);
+    font-size: 1.5em;
+    margin-bottom: 20px;
+  }
+  
+  /* Call Controls */
+  .call-controls {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    position: absolute;
+    bottom: 40px;
+  }
+  
+  .control-button {
+    background-color: var(--button-bg-color);
+    color: var(--button-text-color);
+    border: none;
+    padding: 20px;
+    border-radius: 50%;
+    font-size: 2em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .end-call-button {
+    background-color: red;
+  }
+  
+  .mute-button, .video-toggle-button {
+    background-color: var(--button-bg-color);
+  }
+  
+  .control-button:hover {
+    background-color: var(--button-hover-bg-color);
+  }
+  
+  .control-button i {
+    pointer-events: none;
+  }
+  

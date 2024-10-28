@@ -26,6 +26,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     --button-hover-bg-color: #2980b9;
     --highlight-color: #3498db;
     --disabled-bg-color: #bdc3c7;
+    --call-action-backgroud: #f4f6f9;
 }
   
   :root.dark-theme {
@@ -47,5 +48,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   --button-hover-bg-color: #3498db;
   --highlight-color: #2980b9;
   --disabled-bg-color: #7f8c8d;
+  --call-action-backgroud: #bb86fc;
   }
   

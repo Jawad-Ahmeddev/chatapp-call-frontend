@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, OnChanges, SimpleChanges, ChangeDetectorRef } from '@angular/core';
+import { Component, HostListener, OnInit, ChangeDetectorRef} from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
 import { UserServiceService } from '../core/services/user-service.service';
@@ -21,17 +21,20 @@ export class HeaderPageComponent implements OnInit{
 
   ngOnInit(): void {
     this.userId = this.authService.getCurrentUserId()
+    this.authService.currentUser$.subscribe(profile => {
+      this.userProfile = profile;  // Update the user profile dynamically
+    });
 
-   this.authService.getUserProfile(this.userId).subscribe(
+    this.authService.getUserProfile(this.userId).subscribe(
       (profile) => {
-        this.userProfile = profile;
+        let userProfile = profile;
+        this.authService.setUser(userProfile)
       },
       (error) => {
         console.error('Failed to load user profile:', error);
       }
-    );  }
-
-  
+    );
+     }
 
     toggleDropdown(){
       this.isDropDownOpen= !this.isDropDownOpen; 

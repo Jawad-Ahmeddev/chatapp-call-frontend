@@ -30,6 +30,9 @@ import { LoaderComponent } from './loader/loader.component';
 import { SidebarLoaderComponent } from './sidebar-loader/sidebar-loader.component';
 import { ChatwindowLoaderComponent } from './chatwindow-loader/chatwindow-loader.component';
 import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
+import { CallScreenComponentComponent } from './call-screen-component/call-screen-component.component';
+// import firebase from 'firebase/compat/app';
+// import 'firebase/compat/database';  // Import Firebase Realtime Database
 
 @NgModule({
   declarations: [
@@ -51,6 +54,7 @@ import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
     LoaderComponent,
     SidebarLoaderComponent,
     ChatwindowLoaderComponent,
+    CallScreenComponentComponent,
   ],
   imports: [
     BrowserModule,
@@ -71,4 +75,22 @@ import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+  // constructor(){
+  //   const firebaseConfig = {
+  //     apiKey: "AIzaSyAmdlCrDZDKKnC5EzXGldPKIJkZi6YREn8",
+  //     authDomain: "chat-notification-c4f7e.firebaseapp.com",
+  //     databaseURL: "https://chat-notification-c4f7e-default-rtdb.firebaseio.com",  // Your Realtime Database URL here
+    
+  //     projectId: "chat-notification-c4f7e",
+  //     storageBucket: "chat-notification-c4f7e.appspot.com",
+  //     messagingSenderId: "468614911686",
+  //     appId: "1:468614911686:web:af387ad70c4035a608e9c7",
+  //     measurementId: "G-VEGDM5HMYR"
+  //   };
+  //   if (!firebase.apps.length) {
+  //     firebase.initializeApp(firebaseConfig);
+  //   }
+  // }
+ }

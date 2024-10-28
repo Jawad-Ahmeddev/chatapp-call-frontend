@@ -1,18 +1,32 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable,BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { response } from 'express';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  
+  private currentUser = new BehaviorSubject<any>(null);  // Observable holding user info
+  currentUser$ = this.currentUser.asObservable();
   private isAuthenticated = false
   private apiUrl = 'http://localhost:3001/api/auth';
   constructor(private http : HttpClient, 
     private router: Router) { }
 
+    setUser(user: any) {
+      this.currentUser.next(user);
+    }
+  
+    // Clear user data on logout
+    clearUser() {
+      this.currentUser.next(null);
+    }
+  
+    // Get the current user value
+    getUser() {
+      return this.currentUser.value;
+    }
     getUserProfile(userId : any ): Observable<any> {
       return this.http.post(`${this.apiUrl}/profile`, { userId });
   }

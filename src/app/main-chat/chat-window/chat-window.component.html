@@ -19,6 +19,18 @@
         <button class="dropdown__item" (click)="exitChat()">Exit Chat</button>
       </div>
     </div> -->
+
+    <div class="chat-header__actions">
+      <!-- Audio Call Icon -->
+      <button class="header-action__button" (click)="startAudioCall()">
+        <i class="fas fa-phone"></i>
+      </button>
+      
+      <!-- Video Call Icon -->
+      <button class="header-action__button" (click)="startVideoCall()">
+        <i class="fas fa-video"></i>
+      </button>
+    </div>
   </div>
   
   <!-- Messages Area -->

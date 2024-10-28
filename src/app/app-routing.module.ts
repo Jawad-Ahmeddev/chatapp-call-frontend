@@ -6,6 +6,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { SettingsComponent } from './settings/settings.component';
 import { AuthGuardService } from './core/services/auth-guard.service';
 import { MainChatComponent } from './main-chat/main-chat.component';
+import { CallScreenComponentComponent } from './call-screen-component/call-screen-component.component';
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
@@ -16,6 +17,7 @@ const routes: Routes = [
     { path: 'personal/:id', component: MainChatComponent }, // Personal chat route
     { path: 'group/:id', component: MainChatComponent } // Group chat route
   ]},
+  { path: 'call', component: CallScreenComponentComponent },  // New route for the call screen,
 
   { path: '**', redirectTo: '/login' } 
 ];

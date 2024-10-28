@@ -26,7 +26,7 @@ export class SidebarComponent implements OnInit,OnChanges, DoCheck {
   showGroupChats: boolean = false;
   showPersonalChats: boolean = false;
 
-  @Output() chatSelected = new EventEmitter<{ chatId: string, chatType: string }>();
+  @Output() chatSelected = new EventEmitter<{ chatId: string, chatType: string, chatName: string, chatAvatar: string }>();
   currentChatView: string = 'recent';  // 'recent' or 'group'
   searchTerm: string = '';  // To store the search term entered by the user
   allChats: any[] = [];     // This will store all chats fetched from the backend
@@ -65,6 +65,7 @@ export class SidebarComponent implements OnInit,OnChanges, DoCheck {
     
     this.socketService.onNewMessage((message) => {
       if (message.sender._id == this.userId) {
+        
         this.fetchRecentChats(); // Fetch recent chats by default
       }
       else{
@@ -237,7 +238,7 @@ export class SidebarComponent implements OnInit,OnChanges, DoCheck {
   }
   
 
-  openChat(chatId: string, chatType: string) {
+  openChat(chatId: string, chatType: string,chatAvatar: any, chatName: any) {
     this.selectedChatId = chatId; // Set the selected chat ID
 
     // Mark the chat as read once opened
@@ -247,7 +248,7 @@ export class SidebarComponent implements OnInit,OnChanges, DoCheck {
     }
 
     // Emit the selected chat ID and type
-    this.chatSelected.emit({ chatId, chatType });
+    this.chatSelected.emit({ chatId, chatType,chatAvatar,chatName });
     console.log('Chat selected:', chatId, chatType);
   }
   
@@ -386,8 +387,12 @@ export class SidebarComponent implements OnInit,OnChanges, DoCheck {
 
 
 getProfileImage(participants: any[]): string {
-  const otherParticipant = participants.find(p => p._id !== this.authService.getUserId());
-  return otherParticipant?.profilePicture || 'assets/default-avatar.png'; // Default avatar if no profile picture
+  let otherParticipant = participants.find(p => p._id !== this.authService.getUserId());
+  if (otherParticipant){
+    return otherParticipant?.profilePicture || 'assets/default-avatar.png'; // Default avatar if no profile picture
+
+  }
+  return otherParticipant= 'https://th.bing.com/th?id=OIP.JzfMMdGGxHVW3zepnVulsgHaHw&w=244&h=255&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2'
 }
 
 getParticipantName(participants: any[]): string {

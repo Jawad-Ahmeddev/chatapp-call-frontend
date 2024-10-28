@@ -1,0 +1,28 @@
+<div class="call-screen">
+    <!-- Video Call UI -->
+    <div *ngIf="isVideoCall" class="video-call-container">
+      <video #localVideo autoplay muted class="local-video"></video>
+      <video #remoteVideo autoplay class="remote-video"></video>
+    </div>
+  
+    <!-- Audio Call UI -->
+    <div *ngIf="!isVideoCall" class="audio-call-ui">
+      <img [src]="callAvatar || 'assets/default-avatar.png'" alt="Caller Avatar" class="caller-avatar">
+      <h2 class="caller-name">{{ callName }}</h2>
+      <p class="caller-status">{{ isCallActive ? 'In Call' : 'Calling...' }}</p>
+    </div>
+  
+    <!-- Call Controls -->
+    <div class="call-controls">
+      <button class="control-button mute-button" (click)="toggleMute()">
+        <i class="fas fa-microphone"></i> Mute
+      </button>
+      <button class="control-button end-call-button" (click)="endCall()">
+        <i class="fas fa-phone-slash"></i> End Call
+      </button>
+      <button class="control-button video-toggle-button" *ngIf="isVideoCall" (click)="toggleVideo()">
+        <i class="fas fa-video"></i> Toggle Video
+      </button>
+    </div>
+  </div>
+  

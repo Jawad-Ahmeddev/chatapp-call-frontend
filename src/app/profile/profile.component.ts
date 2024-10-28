@@ -108,6 +108,7 @@ onSubmit(): void {
           (response) => {
               console.log('Profile updated successfully', response);
               this.userProfile = response.user; // Update the UI with the new profile data
+              this.authService.setUser(this.userProfile);
               
           },
           (error) => {

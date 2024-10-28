@@ -1,11 +1,14 @@
 // Import the Firebase scripts for Firebase Cloud Messaging (FCM)
 importScripts('https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js');
 importScripts('https://www.gstatic.com/firebasejs/8.0.0/firebase-messaging.js');
+importScripts('https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js');  // Add Realtime Database
 
 // Initialize the Firebase app in the service worker using your Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyAmdlCrDZDKKnC5EzXGldPKIJkZi6YREn8",
   authDomain: "chat-notification-c4f7e.firebaseapp.com",
+  databaseURL: "https://chat-notification-c4f7e-default-rtdb.firebaseio.com",  // Your Realtime Database URL here
+
   projectId: "chat-notification-c4f7e",
   storageBucket: "chat-notification-c4f7e.appspot.com",
   messagingSenderId: "468614911686",
@@ -15,6 +18,7 @@ const firebaseConfig = {
 
 // Initialize Firebase in the service worker
 firebase.initializeApp(firebaseConfig);
+const db = firebase.database();  // Realtime Database reference
 
 // Retrieve Firebase Messaging instance to handle background messages
 const messaging = firebase.messaging();

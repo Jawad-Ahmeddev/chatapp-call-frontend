@@ -12,6 +12,7 @@ export class LoginComponent implements OnInit{
   loginForm!: FormGroup;
   showPassword = false;
   errorMessage = ''; // For error handling
+  
 
   constructor(
     private fb: FormBuilder,
@@ -56,10 +57,20 @@ export class LoginComponent implements OnInit{
 
           this.addSuccessAnimation();
           localStorage.setItem('userId', response.userId); // Store the user ID
+          this.authService.getUserProfile(response.userId).subscribe(
+            (profile) => {
+              let userProfile = profile;
+              this.authService.setUser(userProfile)
+            },
+            (error) => {
+              console.error('Failed to load user profile:', error);
+            }
+          );
           this.router.navigate(['/chat']); // Ensure this path matches the route for MainChatComponent
-          setTimeout(() => {
-            window.location.reload();  // Refresh the page to reinitialize the app
-          }, 1);
+
+          // setTimeout(() => {
+          //   window.location.reload();  // Refresh the page to reinitialize the app
+          // }, 1);
         },
         (error) => {
           this.errorMessage = 'Invalid email or password';
