@@ -1,7 +1,7 @@
 export const environment = {
     production: false,
     firebaseConfig: {
-      apiKey: "AIzaSyAmdlCrDZDKKnC5EzXGldPKIJkZi6YREn8",
+      apiKey: "",
       authDomain: "chat-notification-c4f7e.firebaseapp.com",
       databaseURL: "https://chat-notification-c4f7e-default-rtdb.firebaseio.com",  // Your Realtime Database URL here
       projectId: "chat-notification-c4f7e",
